@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Cipher</string>
+
+    <string-array name="split_array">
+        <item>Joey</item>
+        <item> Chris</item>
+        <item> Mate</item>
+    </string-array>
 </resources>
