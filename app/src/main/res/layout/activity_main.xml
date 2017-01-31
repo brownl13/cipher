@@ -13,9 +13,9 @@
         android:layout_width="700px"
         android:layout_height="550px"
         android:id="@+id/textView"
-        android:layout_above="@+id/spinner"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="700px"
@@ -38,11 +38,11 @@
         android:layout_height="wrap_content"
         android:text="Run"
         android:id="@+id/run"
-        android:layout_below="@+id/textView"
-        android:layout_alignRight="@+id/inputCipher"
-        android:layout_alignEnd="@+id/inputCipher"
-        android:layout_marginRight="19dp"
-        android:layout_marginEnd="19dp"
-        android:onClick="RunOnClick" />
+        android:layout_marginRight="23dp"
+        android:layout_marginEnd="23dp"
+        android:onClick="RunOnClick"
+        android:layout_alignTop="@+id/spinner"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
 
 </RelativeLayout>
