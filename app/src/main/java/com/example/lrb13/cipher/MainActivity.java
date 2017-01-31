@@ -66,6 +66,7 @@ public class MainActivity extends Activity {
     {
         if(p==0)
         {
+
             output.setText("You selected Joey's Function");
         }
         else if(p==1)
@@ -77,5 +78,10 @@ public class MainActivity extends Activity {
             output.setText("You selected Mate's Function");
         }
 
+    }
+
+    public void RunOnClick(View v)
+    {
+        output.setText("Run Button works");
     }
 }
