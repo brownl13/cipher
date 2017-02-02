@@ -2,7 +2,6 @@ import java.util.*;
 import java.lang.*;
 import java.io.*;
 
-/* Name of the class has to be "Main" only if the class is public. */
 class final ufun{
 	//1-26
 	public final ArrayList<Integer> uZcon(String c){
