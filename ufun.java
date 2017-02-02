@@ -3,10 +3,11 @@ import java.lang.*;
 import java.io.*;
 
 /* Name of the class has to be "Main" only if the class is public. */
-class ufun{
-	
+class final ufun{
+	//1-26
 	public final ArrayList<Integer> uZcon(String c){
 		c = c.toLowerCase(); //to lower
+		c = c.replaceAll(" ","");
 		ArrayList n = new ArrayList<Integer>();
 		char[] cArray = c.toCharArray(); // to char array
 
@@ -19,9 +20,10 @@ class ufun{
 		
 
 	}
-	
+	//0-25	
 	public final ArrayList<Integer> uOcon(String c){
 		c = c.toLowerCase(); //to lower
+		c = c.replaceAll(" ","");
 		ArrayList n = new ArrayList<Integer>();
 		char[] cArray = c.toCharArray(); // to char array
 
