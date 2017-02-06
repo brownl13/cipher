@@ -131,6 +131,8 @@ public class MainActivity extends Activity {
         } else if (p == 2) {
             output.setText("You selected Mate's Function");
         }
+        else if (p==3)
+            output.setText("Joey 2");
     }
 
     @Override
