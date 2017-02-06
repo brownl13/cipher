@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Spinner;
 import android.widget.EditText;
+import java.util.ArrayList;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -23,9 +24,16 @@ public class MainActivity extends Activity {
 
     Spinner functionList;
     TextView output;
-
+    String nv;
+    EditText in;
+    EditText n;
+    int size;
     int position;
     int i = 0;
+    String input;
+    String result;
+    int length;
+    int p;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -38,7 +46,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         output = (TextView) findViewById(R.id.textView);
-
+        n = (EditText) findViewById(R.id.nValue);
+        in = (EditText) findViewById(R.id.inputCipher);
+        input = in.getText().toString();
+        length = input.length();
         functionList = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.split_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -47,17 +58,7 @@ public class MainActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                switch (position) {
-                    case 0:
-                        doFunction(0);
-                        break;
-                    case 1:
-                        doFunction(1);
-                        break;
-                    case 2:
-                        doFunction(2);
-                        break;
-                }
+                p = position;
             }
 
             @Override
@@ -75,21 +76,60 @@ public class MainActivity extends Activity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    //@Override
-    public void doFunction(int p) {
+
+    public void RunOnClick(View v) {
+        result = "";
         if (p == 0) {
 
-            output.setText("You selected Joey's Function");
+            size = Integer.parseInt(n.getText().toString());
+            //size = Integer.parseInt(nv);
+            //size = 2;
+            if(size<1){ //size is the result of text field i need to create (n)
+                size=1;
+            }//end if
+
+            input =input.replaceAll(" ","");
+            input=input.toUpperCase();
+
+            if(size<=input.length()){
+                ArrayList<String> array = new ArrayList<String>();
+                for(int i=0; i<input.length()-size+1;i++){
+                    String letters = input.substring(i,i+size);
+                    array.add(i,letters);
+                }//end for loop
+
+                ArrayList<String> listed = new ArrayList<String>();
+
+                for(int j=0;j<array.size();j++){
+                    String l=array.get(j);
+                    if(listed.contains(l)==false){
+                        listed.add(l);
+                        if(array.lastIndexOf(l)==j){
+                            result = result + " = 1 at positions " + j + "\n";
+                        }//end if
+
+                        else{
+                            ArrayList<Integer> position = new ArrayList<Integer>();
+                            int count =0;
+                            for(int k=0;k<array.size();k++){
+                                if(array.get(k).equals(l)){
+                                    count++;
+                                    position.add(k);
+                                }//end if
+                            }//end for
+                            result = result + l + " = " + count + " at positions " + position + "\n";
+                        }//end else
+                    }//end if
+
+                }
+                //end for loop
+            }//end if
+            output.setText(result);
         } else if (p == 1) {
             output.setText("You selected Chris's Function");
         } else if (p == 2) {
             output.setText("You selected Mate's Function");
         }
-
-    }
-
-    public void RunOnClick(View v) {
-        output.setText("Run Button works");
     }
 
     @Override
