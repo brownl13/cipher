@@ -48,8 +48,7 @@ public class MainActivity extends Activity {
         output = (TextView) findViewById(R.id.textView);
         n = (EditText) findViewById(R.id.nValue);
         in = (EditText) findViewById(R.id.inputCipher);
-        input = in.getText().toString();
-        length = input.length();
+
         functionList = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.split_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -79,6 +78,8 @@ public class MainActivity extends Activity {
 
     public void RunOnClick(View v) {
         result = "";
+        input = in.getText().toString();
+        length = input.length();
         if (p == 0) {
 
             size = Integer.parseInt(n.getText().toString());
@@ -105,7 +106,7 @@ public class MainActivity extends Activity {
                     if(listed.contains(l)==false){
                         listed.add(l);
                         if(array.lastIndexOf(l)==j){
-                            result = result + " = 1 at positions " + j + "\n";
+                            result = result + l + " = 1 at positions " + j + "\n";
                         }//end if
 
                         else{
