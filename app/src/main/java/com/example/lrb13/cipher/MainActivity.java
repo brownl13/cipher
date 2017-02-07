@@ -91,7 +91,7 @@ public class MainActivity extends Activity {
 
             input =input.replaceAll(" ","");
             input=input.toUpperCase();
-
+            input = input.replaceAll("[A-Za-z]+","");
             if(size<=input.length()){
                 ArrayList<String> array = new ArrayList<String>();
                 for(int i=0; i<input.length()-size+1;i++){
