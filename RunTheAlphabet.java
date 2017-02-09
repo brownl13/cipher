@@ -31,6 +31,5 @@ public class RunTheAlphabet {
 			}
 			System.out.println(output.toString());
 		}
-		
 	}
 }
