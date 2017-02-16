@@ -83,15 +83,14 @@ public class MainActivity extends Activity {
         if (p == 0) {
 
             size = Integer.parseInt(n.getText().toString());
-            //size = Integer.parseInt(nv);
-            //size = 2;
+
             if(size<1){ //size is the result of text field i need to create (n)
                 size=1;
             }//end if
 
             input =input.replaceAll(" ","");
             input=input.toUpperCase();
-            input = input.replaceAll("[A-Za-z]+","");
+            input = input.replaceAll("[^A-Za-z]+","");
             if(size<=input.length()){
                 ArrayList<String> array = new ArrayList<String>();
                 for(int i=0; i<input.length()-size+1;i++){
@@ -129,7 +128,25 @@ public class MainActivity extends Activity {
         } else if (p == 1) {
             output.setText("You selected Chris's Function");
         } else if (p == 2) {
-            output.setText("You selected Mate's Function");
+            input = input.toLowerCase();
+            for (int j = 0; j <= 25; j++) {
+                for (int i = 0; i < input.length(); i++) {
+                    int charInt = (int)input.charAt(i);
+                    if ((charInt >= 97 && charInt <= 122)) {
+                        if ((charInt + j) > 122) {
+                            int tempIndex = charInt + j - 123;
+                            result = result + ((char)(97 + tempIndex));
+                        }
+                        else
+                            result = result + ((char)(charInt + j));
+                        }
+                    else {
+                        result = result + (' ');
+                    }
+                }
+                result = result + "\n";
+                }
+            output.setText(result);
         }
         else if (p==3) {
             //create array to store count in a=0,b=1...
@@ -167,6 +184,26 @@ public class MainActivity extends Activity {
                 double index = num/den;
                 output.setText("" + index);
             }//end else
+        }
+        else if (p==4)
+        {
+            size = Integer.parseInt(n.getText().toString());
+            input = input.toLowerCase();
+            for (int i = 0; i < input.length(); i++) {
+                int charInt = (int)input.charAt(i);
+                if ((charInt >= 97 && charInt <= 122)) {
+                    if ((charInt + size) > 122) {
+                        int tempIndex = charInt + size - 123;
+                        result = result + ((char)(97 + tempIndex));
+                    }
+                    else
+                        result = result + ((char)(charInt + size));
+                }
+                else {
+                    result = result + " ";
+                }
+            }
+            output.setText(result);
         }
     }
 
