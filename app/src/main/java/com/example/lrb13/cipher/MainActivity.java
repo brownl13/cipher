@@ -205,6 +205,36 @@ public class MainActivity extends Activity {
             }
             output.setText(result);
         }
+        else if (p==5)
+        {
+            //remove spaces and special characters from string
+            input=input.replaceAll(" ","");
+            input=input.toLowerCase();
+            input=input.replaceAll("[^A-Za-z]+","");
+
+            int array[]=new int[26];
+            //look through each letter in string and update count in the correct spot
+            //index 0 in array is a and index 25 is z
+            for(int i=0;i<input.length();i++){
+                char letter=input.charAt(i);
+                int position= letter-'a';
+                array[position]=array[position]+1;
+            }//end for loop
+
+            String result="";
+            //loop through array and put the results into a single string
+            for(int i=0;i<26;i++){
+
+                String l=String.valueOf((char)(65+i));
+
+                String I="";
+                for(int j=0;j<array[i];j++){
+                    I=I.concat("I");
+                }//end for
+                result=result + l + " = " + array[i] + " = " + I + "\n";
+            }//end for
+            output.setText(result);
+        }
     }
 
     @Override
