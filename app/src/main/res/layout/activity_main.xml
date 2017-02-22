@@ -71,4 +71,14 @@
         android:layout_alignRight="@+id/spinner"
         android:layout_alignEnd="@+id/spinner" />
 
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/oddNumbers"
+        android:layout_alignBottom="@+id/nValue"
+        android:layout_toRightOf="@+id/nValue"
+        android:layout_toEndOf="@+id/nValue"
+        android:layout_marginLeft="21dp"
+        android:layout_marginStart="21dp" />
+
 </RelativeLayout>

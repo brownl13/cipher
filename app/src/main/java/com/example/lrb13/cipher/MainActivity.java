@@ -13,7 +13,10 @@ import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Spinner;
 import android.widget.EditText;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -23,11 +26,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class MainActivity extends Activity {
 
     Spinner functionList;
+    Spinner oddNumberList;
     TextView output;
     String nv;
     EditText in;
     EditText n;
     int size;
+    int p2;
     int position;
     int i = 0;
     String input;
@@ -50,9 +55,13 @@ public class MainActivity extends Activity {
         in = (EditText) findViewById(R.id.inputCipher);
 
         functionList = (Spinner) findViewById(R.id.spinner);
+        oddNumberList = (Spinner) findViewById(R.id.oddNumbers);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.split_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.odd_numbers, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         functionList.setAdapter(adapter);
+        oddNumberList.setAdapter(adapter2);
         functionList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -66,8 +75,21 @@ public class MainActivity extends Activity {
                 // sometimes you need nothing here
             }
         });
-        //position = functionList.getSelectedItemPosition();
-        //doFunction(position);
+
+        oddNumberList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int[] d = {1,3,5,7,9,11,15,17,19,21,23,25};
+                p2 = d[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+                // sometimes you need nothing here
+            }
+        });
+
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -80,161 +102,213 @@ public class MainActivity extends Activity {
         result = "";
         input = in.getText().toString();
         length = input.length();
-        if (p == 0) {
+        if (p == 0) { //ngraph
 
-            size = Integer.parseInt(n.getText().toString());
+            nGraph();
 
-            if(size<1){ //size is the result of text field i need to create (n)
-                size=1;
-            }//end if
-
-            input =input.replaceAll(" ","");
-            input=input.toUpperCase();
-            input = input.replaceAll("[^A-Za-z]+","");
-            if(size<=input.length()){
-                ArrayList<String> array = new ArrayList<String>();
-                for(int i=0; i<input.length()-size+1;i++){
-                    String letters = input.substring(i,i+size);
-                    array.add(i,letters);
-                }//end for loop
-
-                ArrayList<String> listed = new ArrayList<String>();
-
-                for(int j=0;j<array.size();j++){
-                    String l=array.get(j);
-                    if(listed.contains(l)==false){
-                        listed.add(l);
-                        if(array.lastIndexOf(l)==j){
-                            result = result + l + " = 1 at positions " + j + "\n";
-                        }//end if
-
-                        else{
-                            ArrayList<Integer> position = new ArrayList<Integer>();
-                            int count =0;
-                            for(int k=0;k<array.size();k++){
-                                if(array.get(k).equals(l)){
-                                    count++;
-                                    position.add(k);
-                                }//end if
-                            }//end for
-                            result = result + l + " = " + count + " at positions " + position + "\n";
-                        }//end else
-                    }//end if
-
-                }
-                //end for loop
-            }//end if
-            output.setText(result);
-        } else if (p == 1) {
-            output.setText("You selected Chris's Function");
-        } else if (p == 2) {
-            input = input.toLowerCase();
-            for (int j = 0; j <= 25; j++) {
-                for (int i = 0; i < input.length(); i++) {
-                    int charInt = (int)input.charAt(i);
-                    if ((charInt >= 97 && charInt <= 122)) {
-                        if ((charInt + j) > 122) {
-                            int tempIndex = charInt + j - 123;
-                            result = result + ((char)(97 + tempIndex));
-                        }
-                        else
-                            result = result + ((char)(charInt + j));
-                        }
-                    else {
-                        result = result + (' ');
-                    }
-                }
-                result = result + "\n";
-                }
-            output.setText(result);
+        } else if (p == 1) {//run the alphabet
+            runTheAlphabet();
         }
-        else if (p==3) {
-            //create array to store count in a=0,b=1...
-            int array[]=new int[26];
+        else if (p==2) { //index of coincidence
+            indexOfCoincidence();
 
-            //take string and convert to lowercase and remove spaces
-            input=input.replaceAll(" ","");
-            input=input.toLowerCase();
-            input=input.replaceAll("[^A-Za-z]+","");
-            if(input.length()<=1){
-                output.setText("NA");
-            }//end if
-
-            else{
-
-                //look through each letter in string and update count in the correct spot
-                for(int i=0;i<input.length();i++){
-                    char letter=input.charAt(i);
-                    int position= letter-'a';
-                    array[position]=array[position]+1;
-                }//end for loop
-
-                //loop through and get the numerator value
-                int numerator=0;
-                for(int i=0;i<array.length;i++){
-                    numerator=numerator+(array[i]*(array[i]-1));
-                }//end for loop
-
-                //create denominator value
-                int denominator=input.length()*(input.length()-1);
-
-                //convert integers to doubles and get Index
-                double num=(double) numerator;
-                double den=(double) denominator;
-                double index = num/den;
-                output.setText("" + index);
-            }//end else
+        }
+        else if (p==3)
+        { //caesar
+            caesar();
         }
         else if (p==4)
-        {
-            size = Integer.parseInt(n.getText().toString());
-            input = input.toLowerCase();
+        { //frequency
+            frequency();
+
+
+        }
+        else if (p==5)
+        { //multiplicative
+            multiplicative();
+        }
+    }
+
+    private void nGraph() {
+        size = Integer.parseInt(n.getText().toString());
+
+        if(size<1){ //size is the result of text field i need to create (n)
+            size=1;
+        }//end if
+
+        input =input.replaceAll(" ","");
+        input=input.toUpperCase();
+        input = input.replaceAll("[^A-Za-z]+","");
+        if(size<=input.length()){
+            ArrayList<String> array = new ArrayList<String>();
+            for(int i=0; i<input.length()-size+1;i++){
+                String letters = input.substring(i,i+size);
+                array.add(i,letters);
+            }//end for loop
+
+            ArrayList<String> listed = new ArrayList<String>();
+
+            for(int j=0;j<array.size();j++){
+                String l=array.get(j);
+                if(listed.contains(l)==false){
+                    listed.add(l);
+                    if(array.lastIndexOf(l)==j){
+                        result = result + l + " = 1 at positions " + j + "\n";
+                    }//end if
+
+                    else{
+                        ArrayList<Integer> position = new ArrayList<Integer>();
+                        int count =0;
+                        for(int k=0;k<array.size();k++){
+                            if(array.get(k).equals(l)){
+                                count++;
+                                position.add(k);
+                            }//end if
+                        }//end for
+                        result = result + l + " = " + count + " at positions " + position + "\n";
+                    }//end else
+                }//end if
+
+            }
+            //end for loop
+        }//end if
+        output.setText(result);
+    }
+
+    private void runTheAlphabet() {
+        input = input.toLowerCase();
+        for (int j = 0; j <= 25; j++) {
             for (int i = 0; i < input.length(); i++) {
                 int charInt = (int)input.charAt(i);
                 if ((charInt >= 97 && charInt <= 122)) {
-                    if ((charInt + size) > 122) {
-                        int tempIndex = charInt + size - 123;
+                    if ((charInt + j) > 122) {
+                        int tempIndex = charInt + j - 123;
                         result = result + ((char)(97 + tempIndex));
                     }
                     else
-                        result = result + ((char)(charInt + size));
-                }
+                        result = result + ((char)(charInt + j));
+                    }
                 else {
-                    result = result + " ";
+                    result = result + (' ');
                 }
             }
-            output.setText(result);
-        }
-        else if (p==5)
-        {
-            //remove spaces and special characters from string
-            input=input.replaceAll(" ","");
-            input=input.toLowerCase();
-            input=input.replaceAll("[^A-Za-z]+","");
+            result = result + "\n";
+            }
+        output.setText(result);
+    }
 
-            int array[]=new int[26];
+    private void indexOfCoincidence() {
+        //create array to store count in a=0,b=1...
+        int array[]=new int[26];
+
+        //take string and convert to lowercase and remove spaces
+        input=input.replaceAll(" ","");
+        input=input.toLowerCase();
+        input=input.replaceAll("[^A-Za-z]+","");
+        if(input.length()<=1){
+            output.setText("NA");
+        }//end if
+
+        else{
+
             //look through each letter in string and update count in the correct spot
-            //index 0 in array is a and index 25 is z
             for(int i=0;i<input.length();i++){
                 char letter=input.charAt(i);
                 int position= letter-'a';
                 array[position]=array[position]+1;
             }//end for loop
 
-            String result="";
-            //loop through array and put the results into a single string
-            for(int i=0;i<26;i++){
+            //loop through and get the numerator value
+            int numerator=0;
+            for(int i=0;i<array.length;i++){
+                numerator=numerator+(array[i]*(array[i]-1));
+            }//end for loop
 
-                String l=String.valueOf((char)(65+i));
+            //create denominator value
+            int denominator=input.length()*(input.length()-1);
 
-                String I="";
-                for(int j=0;j<array[i];j++){
-                    I=I.concat("I");
-                }//end for
-                result=result + l + " = " + array[i] + " = " + I + "\n";
-            }//end for
-            output.setText(result);
+            //convert integers to doubles and get Index
+            double num=(double) numerator;
+            double den=(double) denominator;
+            double index = num/den;
+            output.setText("" + index);
+        }//end else
+    }
+
+    private void caesar() {
+        size = Integer.parseInt(n.getText().toString());
+        input = input.toLowerCase();
+        for (int i = 0; i < input.length(); i++) {
+            int charInt = (int)input.charAt(i);
+            if ((charInt >= 97 && charInt <= 122)) {
+                if ((charInt + size) > 122) {
+                    int tempIndex = charInt + size - 123;
+                    result = result + ((char)(97 + tempIndex));
+                }
+                else
+                    result = result + ((char)(charInt + size));
+            }
+            else {
+                result = result + " ";
+            }
         }
+        output.setText(result);
+    }
+
+    private void frequency() {
+        //remove spaces and special characters from string
+        input=input.replaceAll(" ","");
+        input=input.toLowerCase();
+        input=input.replaceAll("[^A-Za-z]+","");
+
+        int array[]=new int[26];
+        //look through each letter in string and update count in the correct spot
+        //index 0 in array is a and index 25 is z
+        for(int i=0;i<input.length();i++){
+            char letter=input.charAt(i);
+            int position= letter-'a';
+            array[position]=array[position]+1;
+        }//end for loop
+
+        String result="";
+        //loop through array and put the results into a single string
+        for(int i=0;i<26;i++){
+
+            String l=String.valueOf((char)(65+i));
+
+            String I="";
+            for(int j=0;j<array[i];j++){
+                I=I.concat("I");
+            }//end for
+            result=result + l + " = " + array[i] + " = " + I + "\n";
+        }//end for
+        output.setText(result);
+    }
+
+    private void multiplicative() {
+        int value = p2;
+
+        input=input.replaceAll(" ","");
+        input=input.toLowerCase();
+        input=input.replaceAll("[^A-Za-z]+","");
+
+        for (int i = 0; i < input.length(); i++) {
+            int charInt = (int)input.charAt(i);
+            if ((charInt >= 97 && charInt <= 122)) {
+                charInt = charInt - 96;
+                charInt = charInt * value;
+                charInt = charInt % 26;
+                if (charInt == 0)
+                    charInt = 122;
+                else
+                    charInt += 96;
+                result = result + ((char)charInt);
+            }
+            else {
+                result = result + (' ');
+            }
+        }
+        output.setText(result);
     }
 
     @Override

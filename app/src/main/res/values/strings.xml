@@ -2,11 +2,26 @@
     <string name="app_name">Cipher</string>
 
     <string-array name="split_array">
-        <item>Joey</item>
-        <item> Chris</item>
-        <item> Mate</item>
-        <item> Joey 2 </item>
-        <item> Mate 2</item>
-        <item> Joey 3 </item>
+        <item>N Graph</item>
+        <item> Run the Alphabet</item>
+        <item> Index of Coincidence </item>
+        <item> Caesar</item>
+        <item> Frequency </item>
+        <item> Multiplicative </item>
+    </string-array>
+
+    <string-array name="odd_numbers">
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>
+        <item>7</item>
+        <item>9</item>
+        <item>11</item>
+        <item>15</item>
+        <item>17</item>
+        <item>19</item>
+        <item>21</item>
+        <item>23</item>
+        <item>25</item>
     </string-array>
 </resources>
