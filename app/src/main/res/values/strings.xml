@@ -8,6 +8,7 @@
         <item> Caesar</item>
         <item> Frequency </item>
         <item> Multiplicative </item>
+        <item> Affine </item>
     </string-array>
 
     <string-array name="odd_numbers">

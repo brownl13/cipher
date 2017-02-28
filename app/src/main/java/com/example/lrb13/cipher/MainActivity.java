@@ -32,6 +32,7 @@ public class MainActivity extends Activity {
     EditText in;
     EditText n;
     int size;
+    String caesarIndex;
     int p2;
     int position;
     int i = 0;
@@ -126,6 +127,11 @@ public class MainActivity extends Activity {
         else if (p==5)
         { //multiplicative
             multiplicative();
+        }
+
+        else if (p==6)
+        {
+           affine();
         }
     }
 
@@ -236,7 +242,8 @@ public class MainActivity extends Activity {
     }
 
     private void caesar() {
-        size = Integer.parseInt(n.getText().toString());
+        caesarIndex = n.getText().toString();
+        size = getIndex(caesarIndex);
         input = input.toLowerCase();
         for (int i = 0; i < input.length(); i++) {
             int charInt = (int)input.charAt(i);
@@ -309,6 +316,88 @@ public class MainActivity extends Activity {
             }
         }
         output.setText(result);
+    }
+
+    public void affine()
+    {
+
+        input = input.toLowerCase();
+        result = multiplicative2(input, p2);
+        result = caesar2(result, length);
+        output.setText(result);
+    }
+
+    public static String caesar2(String input, int index) {
+        StringBuilder s2 = new StringBuilder();
+        input = input.toLowerCase();
+
+        for (int i = 0; i < input.length(); i++) {
+            int charInt = (int)input.charAt(i);
+            if ((charInt >= 97 && charInt <= 122)) {
+                if ((charInt + index) > 122) {
+                    int tempIndex = charInt + index - 123;
+                    s2.append((char)(97 + tempIndex));
+                }
+                else
+                    s2.append((char)(charInt + index));
+            }
+            else {
+                s2.append(' ');
+            }
+        }
+        return s2.toString();
+    }
+
+    public String multiplicative2(String input, int index) {
+        StringBuilder result2 = new StringBuilder();
+        input = input.toLowerCase();
+
+        for (int i = 0; i < input.length(); i++) {
+            int charInt = (int)input.charAt(i);
+            if ((charInt >= 97 && charInt <= 122)) {
+                charInt -= 96;
+                charInt *= index;
+                charInt %= 26;
+                if (charInt == 0)
+                    charInt = 122;
+                else
+                    charInt += 96;
+                result2.append((char)charInt);
+            }
+            else {
+                result2.append(' ');
+                			}
+        }
+        return result2.toString();
+    }
+
+    public static int getIndex(String input) {
+        if (isInteger(input)) {
+            int index = Integer.parseInt(input);
+            if (index < 0)
+                return -1;
+            else if (index >= 0 && index <= 25)
+                return index;
+            else
+                return (index % 26);
+        }
+        else {
+            if (input.length() == 1) {
+                int charInt = (int)input.charAt(0);
+                if (charInt >= 65 && charInt <= 90)
+                    return (charInt - 65);
+                else if (charInt >= 97 && charInt <= 122)
+                    return (charInt - 97);
+                else
+                    return -1;
+            }
+            else
+                return -1;
+        }
+    }
+
+    private static boolean isInteger(String str) {
+        return str.matches("^-?\\d+$");
     }
 
     @Override
