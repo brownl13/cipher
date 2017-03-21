@@ -17,6 +17,9 @@ import android.widget.EditText;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.math.BigInteger;
+import java.util.List;
+import java.util.Random;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -75,6 +78,8 @@ public class MainActivity extends Activity {
 
                 // sometimes you need nothing here
             }
+
+
         });
 
         oddNumberList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -103,6 +108,7 @@ public class MainActivity extends Activity {
         result = "";
         input = in.getText().toString();
         length = input.length();
+        output.setText("");
         if (p == 0) { //ngraph
 
             nGraph();
@@ -132,6 +138,21 @@ public class MainActivity extends Activity {
         else if (p==6)
         {
            affine();
+        }
+
+        else if (p==7)
+        {
+            vigenere();
+        }
+
+        else if (p==8)
+        {
+            RSAKeyGeneration();
+        }
+
+        else if (p==9)
+        {
+            present();
         }
     }
 
@@ -399,6 +420,514 @@ public class MainActivity extends Activity {
     private static boolean isInteger(String str) {
         return str.matches("^-?\\d+$");
     }
+
+    public void vigenere()
+    {
+        ArrayList<Integer> index = getIndexArray();
+        int arrayCounter = 0;
+        int shiftIndex = 0;
+        input = input.toLowerCase();
+
+        for (int i = 0; i < input.length(); i++) {
+            int charInt = (int)input.charAt(i);
+            if (charInt >= 97 && charInt <= 122) {
+                if (arrayCounter >= index.size()) {
+                    shiftIndex = index.get(arrayCounter % index.size());
+                }
+                else
+                    shiftIndex = index.get(arrayCounter);
+
+                if ((charInt + shiftIndex) > 122) {
+                    int tempIndex = charInt + shiftIndex - 123;
+                    result = result + ((char)(97 + tempIndex));
+                }
+                else {
+                    result = result + ((char)(charInt + shiftIndex));
+                }
+                arrayCounter++;
+            }
+            else {
+                result = result + (' ');
+            }
+        }
+        output.setText(result);
+    }
+
+    public ArrayList<Integer> getIndexArray() {
+        String indexInput = n.getText().toString();
+        indexInput = indexInput.toLowerCase();
+        ArrayList<Integer> indexArray = new ArrayList<>();
+
+        for (int i = 0; i < indexInput.length(); i++) {
+            int charInt = (int)indexInput.charAt(i);
+            if (charInt >= 97 && charInt <= 122) {
+                indexArray.add(charInt - 97);
+            }
+        }
+        return indexArray;
+    }
+
+    public void RSAKeyGeneration()
+    {
+        //define variables that are used in while loop below
+        boolean prime1=false;
+        boolean prime2=false;
+        boolean noPrimeInt=false;
+        boolean noPrimeInt2=false;
+        long p1=0;
+        long p2=0;
+
+        //runs until two primes are generated between 10 mil and 20 mil
+        while(prime1==false || prime2== false){
+            Random rand = new Random();
+            Random rand2 = new Random();
+
+            //once we have prime number stop running this part
+            if(prime1==false){
+                //generate random number
+                p1=rand.nextInt(10000000)+10000000;
+                noPrimeInt=false;
+
+                //loop through possible factors to check if prime
+                for(int i=2;i<=Math.sqrt(p1)+1;i++){
+                    if(p1%i==0){
+                        noPrimeInt=true;
+                    }//end if
+                }//end for
+
+                //change prime boolean if prime number
+                if(noPrimeInt==false){
+                    prime1=true;
+                }//ends if
+
+                else{
+                    prime1=false;
+                }//ends else
+            }//end if
+
+            //once we have prime number 2 stop running this part
+            if(prime2==false){
+                //generate random number
+                p2=rand2.nextInt(10000000)+10000000;
+                noPrimeInt2=false;
+
+                //check to see if random number is prime
+                for(int i=2;i<=Math.sqrt(p2)+1;i++){
+                    if(p2%i==0){
+                        noPrimeInt2=true;
+                    }//end if
+                }//end for
+
+                //change prime boolean if prime number
+                if(noPrimeInt2==false){
+                    prime2=true;
+                }//end if
+
+                else{
+                    prime2=false;
+                }//end else
+            }//end if
+        }//end while
+
+
+        //create modulus and phi
+        //these numbers are based on the two prime numbers generated above
+        Long mod=p1*p2;
+        Long phi =(p1-1)*(p2-1);
+
+        //define variables to be used in while loop below
+        //had to convert some numbers we had before from long to BigInteger
+        BigInteger phi2=BigInteger.valueOf(phi);
+        long encryption=0;
+        BigInteger encrypt=BigInteger.valueOf(encryption);
+        BigInteger gcd=encrypt;
+        BigInteger one=BigInteger.valueOf(Long.valueOf(1));
+        Random rand3= new Random();
+        boolean relprime=false;
+        boolean noPrimeInt3=false;
+        boolean prime3=false;
+
+        //gets encryption exponent
+        while(relprime==false){
+            while(prime3==false){
+                encryption=rand3.nextInt(1000000);
+                encrypt=BigInteger.valueOf(encryption);
+                noPrimeInt3=false;
+                for(int i=2;i<=Math.sqrt(encryption);i++){
+                    if(encryption%i==0){
+                        noPrimeInt3=true;
+                    }//end if
+                }//end for loop
+                if(noPrimeInt3==false){
+                    prime3=true;
+                }
+                else{
+                    prime3=false;
+                }
+            }//end nested while
+
+            gcd=phi2.gcd(encrypt);
+            if(gcd.equals(one)){
+                relprime=true;
+            }//end if
+
+        }//end while
+
+
+        //get decryption exponent
+        long decryption=gcdExtended(phi,encryption);
+        if(decryption<0){
+            decryption=phi+decryption;
+        }
+        decryption=decryption%phi;
+
+        String result="";
+        result=result+"First large prime "+p1+ "\n";
+        result=result+"Second large prime " +p2+"\n";
+        result=result+"Modulus " +mod+"\n";
+        result=result+"Phi is "+phi2+"\n";
+        result=result+"Encryption exponent is " + encryption+"\n";
+        result=result+"Decryption exponent is " + decryption+"\n";
+
+        output.setText(result);
+    }
+
+    //function to get gcdExtended
+    public static long gcdExtended(long a,long b){
+        long x=0;
+        long y=1;
+        long lastx=1;
+        long lasty=0;
+        long temp;
+
+        while(b!=0){
+            long q=a/b;
+            long r=a%b;
+
+            a=b;
+            b=r;
+
+            temp=x;
+            x=lastx-q*x;
+            lastx=temp;
+
+            temp=y;
+            y=lasty-q*y;
+            lasty=temp;
+        }
+        return lasty;
+    }//end gcdExtended
+
+    public void present()
+    {
+        String usk = input;
+        String uP = n.getText().toString();
+
+        if(!usk.matches("[01]+"))
+        {
+            output.setText("your first string is not a binary string");
+        }
+
+        else  if(usk.length()!=20)
+        {
+            output.setText("your first string is not of length 20");
+        }
+
+        else  if(!uP.matches("[01]+"))
+        {
+            output.setText("your second string is not a binary string");
+        }
+
+
+        else  if(uP.length()!=16)
+        {
+            output.setText("your second string is notof length 16");
+        }
+
+        else {
+
+            //need input string called usk 20 chars only 0 and 1
+            //need input string callked uP 16 chars only 0 and 1
+            String ct = "";
+            String key1 = keyGen(usk, 1);
+
+            String rk1 = key1.substring(0, 16);
+            result = result + "Round 1 Key: " + print(rk1) + "\n";
+            //need to output rk1 using print function
+            //example: print(rk1); + however you print to screen in android
+            String key2 = keyGen(key1, 2);
+            String rk2 = key2.substring(0, 16);
+            result = result + "Round 2 Key: " + print(rk2) + "\n";
+            //need to output rk2 using print function
+
+            String key3 = keyGen(key2, 3);
+            String rk3 = key3.substring(0, 16);
+            result = result + "Round 3 Key: " + print(rk3) + "\n";
+            //need to output rk3 using print function
+            //each of these steps can be outputed but not necessary
+            ct = XOR(uP, rk1);
+            ct = SBOX(ct);
+            ct = PRM(ct);
+
+            ct = XOR(ct, rk2);
+            ct = SBOX(ct);
+            ct = PRM(ct);
+
+            ct = XOR(ct, rk3);
+            result = result + "Result: " + print(ct);
+
+            output.setText(result);
+            //need to output ct using print function
+        }
+    }
+
+    //----------------------Key Generation function------------------------------//
+    public String keyGen(String key, int r){
+        String usk = key;
+        char[] aK = usk.toCharArray();
+        char[] sK = new char[20];
+        char[] nK = new char[4];
+        char[] aN = new char[20];
+        char[] rc1 = {'0', '0' , '0' , '1'};
+        char[] rc2 = {'0', '0' , '1' , '0'};
+        char[] rc3 = {'0', '0' , '1' , '1'};
+        char[] rcF = new char[4];
+        int nF = 0;
+        String snF = "";
+        String sAN = "";
+
+	/*
+
+			S-Box
+	Input:  0 1 2 3 4 5 6 7 8 9 A B C D E F
+	Output: C 5 6 B 9 0 A D 3 E F 8 4 7 1 2
+
+	How the array is set up:
+	sIn = Input of S-Box
+	sOut = Output of S-Box
+	*/
+
+        String[] sIn = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
+
+
+        String[] sOut = {"1100", "0101", "0110", "1011", "1001", "0000", "1010", "1101", "0011", "1110", "1111", "1000", "0100", "0111", "0001", "0010" };
+
+
+
+        //rotate left 17 bits
+        System.arraycopy(aK, 17, sK, 0, 3);
+        System.arraycopy(aK, 0, sK, 3, 17);
+
+
+
+
+        //get nibble of key
+        System.arraycopy(sK, 0, nK, 0, 4);
+        String oN = new String(nK);
+        //search sIn for nibble array position = the nibble as a int
+        for(int i = 0; i < sIn.length; i++){
+            if(oN.equals(sIn[i])){
+                nF = i;
+            }
+        }
+        //use nF to find Output nibble
+        for(int i = 0; i < sIn.length; i++){
+            if(i == nF){
+                snF = sOut[i];
+            }
+        }
+
+        //Output nibble string to char array
+        char[] snFA = snF.toCharArray();
+        //adjust key with nibble
+        System.arraycopy(snFA, 0, aN, 0, 4);
+        System.arraycopy(sK, 4, aN, 4, 16);
+
+		/*
+		if(r == 1){
+                    snb1.setText(par(aN));
+                }else if(r == 2){
+                    snb2.setText(par(aN));
+                }else if(r == 3){
+                    snb3.setText(par(aN));
+                }*/
+
+        //make after nibble adjustment array = string
+        sAN = String.valueOf(aN);
+        //find bits in after nibble adjustment to be XORed
+        char[] aNX = sAN.substring(12,16).toCharArray();
+        //XOR r == # of round
+        if(r == 1){
+            for(int i = 0; i < aNX.length; i++){
+                if(aNX[i] == rc1[i]){
+                    rcF[i] =  '0';
+                }else{
+                    rcF[i] = '1';
+                }
+            }
+            //change the actually array
+            aN[12] = rcF[0];
+            aN[13] = rcF[1];
+            aN[14] = rcF[2];
+            aN[15] = rcF[3];
+        }else if(r == 2){
+            for(int i = 0; i < aNX.length; i++){
+                if(aNX[i] == rc2[i]){
+                    rcF[i] =  '0';
+                }else{
+                    rcF[i] = '1';
+                }
+            }
+            //change the actually array
+            aN[12] = rcF[0];
+            aN[13] = rcF[1];
+            aN[14] = rcF[2];
+            aN[15] = rcF[3];
+        }else{
+            for(int i = 0; i < aNX.length; i++){
+                if(aNX[i] == rc3[i]){
+                    rcF[i] =  '0';
+                }else{
+                    rcF[i] = '1';
+                }
+            }
+            //change the actually array
+            aN[12] = rcF[0];
+            aN[13] = rcF[1];
+            aN[14] = rcF[2];
+            aN[15] = rcF[3];
+        }
+        return String.valueOf(aN);
+    }
+
+    //-------------------------XOR function-----------------------------------//
+    public static String XOR(String p, String k){
+        char[] pA = p.toCharArray();
+        char[] kA = k.toCharArray();
+        char[] x = new char[16];
+        //XOR function
+        for(int i = 0; i < pA.length; i++){
+            if(pA[i] == kA[i]){
+                x[i] = '0';
+            }else{
+                x[i] = '1';
+            }
+        }
+
+        return String.valueOf(x);
+    }
+    //------------------S Box function encryption process--------------------//
+    public static String SBOX(String p){
+        String[] sIn = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
+
+
+        String[] sOut = {"1100", "0101", "0110", "1011", "1001", "0000", "1010", "1101", "0011", "1110", "1111", "1000", "0100", "0111", "0001", "0010" };
+        //take XOR pt and break it into nibbles
+        String p0 = p.substring(0,4);
+        String p1 = p.substring(4,8);
+        String p2 = p.substring(8,12);
+        String p3 = p.substring(12,16);
+
+        String s0 = "";
+        String s1 = "";
+        String s2 = "";
+        String s3 = "";
+        String sF = "";
+        //check sIn for position of nibbles and switch with sOut
+        for(int i = 0; i < sIn.length; i++){
+            if(p0.equals(sIn[i])){
+                s0 = sOut[i];
+            }
+        }
+
+        for(int i = 0; i < sIn.length; i++){
+            if(p1.equals(sIn[i])){
+                s1 = sOut[i];
+            }
+        }
+
+        for(int i = 0; i < sIn.length; i++){
+            if(p2.equals(sIn[i])){
+                s2 = sOut[i];
+            }
+        }
+
+        for(int i = 0; i < sIn.length; i++){
+            if(p3.equals(sIn[i])){
+                s3 = sOut[i];
+            }
+        }
+        sF = s0 + s1 + s2 + s3;
+        return sF;
+    }
+    //--------------------------Permutation function-----------------------//
+    public static String PRM(String p){
+        char[] sArray = p.toCharArray();
+
+
+        List<Character> a = new ArrayList<Character>();
+        List<Character> b = new ArrayList<Character>();
+        for(int i = 0; i < sArray.length; i++){
+            a.add(sArray[i]);
+        }
+
+
+
+        b.add(0, a.get(0));
+        b.add(1, a.get(4));
+        b.add(2, a.get(8));
+        b.add(3, a.get(12));
+        b.add(4, a.get(1));
+        b.add(5, a.get(5));
+        b.add(6, a.get(9));
+        b.add(7, a.get(13));
+        b.add(8, a.get(2));
+        b.add(9, a.get(6));
+        b.add(10, a.get(10));
+        b.add(11, a.get(14));
+        b.add(12, a.get(3));
+        b.add(13, a.get(7));
+        b.add(14, a.get(11));
+        b.add(15, a.get(15));
+
+
+        StringBuilder bs = new StringBuilder(b.size());
+        for(Character ch: b){
+            bs.append(ch);
+        }
+
+        return bs.toString();
+    }
+    //-------------------------------PRINT---------------------------------------//
+    public String print(String p){
+        char[] aP = p.toCharArray();
+        String rString = "";
+        for(int i = 0; i < aP.length; i++){
+            if((i+1)%4 == 0 && i != 0){
+                rString += Character.toString(aP[i]) + " ";
+            }else{
+                rString += Character.toString(aP[i]);
+            }
+
+        }
+        return rString;
+    }
+    public String par(char[] aK){
+        String rString = "";
+        for(int i = 0; i < aK.length; i++){
+            if((i+1)%4 == 0 && i != 0){
+                rString += String.valueOf(aK[i] + " ");
+            }else{
+                rString += String.valueOf(aK[i]);
+            }
+
+        }
+        return rString;
+    }
+
+
+
+
 
     @Override
     public void onStart() {

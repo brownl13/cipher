@@ -9,6 +9,9 @@
         <item> Frequency </item>
         <item> Multiplicative </item>
         <item> Affine </item>
+        <item> Vigenere</item>
+        <item> RSA Key Generation</item>
+        <item> Present </item>
     </string-array>
 
     <string-array name="odd_numbers">
