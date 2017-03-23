@@ -341,14 +341,15 @@ public class MainActivity extends Activity {
 
     public void affine()
     {
-
+        caesarIndex = n.getText().toString();
+        size = getIndex(caesarIndex);
         input = input.toLowerCase();
         result = multiplicative2(input, p2);
-        result = caesar2(result, length);
+        result = caesar2(result, size);
         output.setText(result);
     }
 
-    public static String caesar2(String input, int index) {
+    public String caesar2(String input, int index) {
         StringBuilder s2 = new StringBuilder();
         input = input.toLowerCase();
 
@@ -392,7 +393,7 @@ public class MainActivity extends Activity {
         return result2.toString();
     }
 
-    public static int getIndex(String input) {
+    public int getIndex(String input) {
         if (isInteger(input)) {
             int index = Integer.parseInt(input);
             if (index < 0)
@@ -417,7 +418,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    private static boolean isInteger(String str) {
+    private boolean isInteger(String str) {
         return str.matches("^-?\\d+$");
     }
 
@@ -621,7 +622,9 @@ public class MainActivity extends Activity {
     public void present()
     {
         String usk = input;
+        usk = usk.replaceAll(" ", "");
         String uP = n.getText().toString();
+        uP = uP.replaceAll(" ", "");
 
         if(!usk.matches("[01]+"))
         {
