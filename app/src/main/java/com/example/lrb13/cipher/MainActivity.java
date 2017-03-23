@@ -43,6 +43,8 @@ public class MainActivity extends Activity {
     String result;
     int length;
     int p;
+    String out;
+    String strn;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -106,58 +108,63 @@ public class MainActivity extends Activity {
 
     public void RunOnClick(View v) {
         result = "";
+        out = "";
+        strn = "";
+        strn = strn + n.getText().toString();
         input = in.getText().toString();
         length = input.length();
         output.setText("");
         if (p == 0) { //ngraph
 
-            nGraph();
+            out = out + nGraph();
 
         } else if (p == 1) {//run the alphabet
-            runTheAlphabet();
+            out = out + runTheAlphabet();
         }
         else if (p==2) { //index of coincidence
-            indexOfCoincidence();
+            out = out + indexOfCoincidence();
 
         }
         else if (p==3)
         { //caesar
-            caesar();
+            out = out + caesar();
         }
         else if (p==4)
         { //frequency
-            frequency();
+            out = out + frequency();
 
 
         }
         else if (p==5)
         { //multiplicative
-            multiplicative();
+            out = out + multiplicative();
         }
 
         else if (p==6)
         {
-           affine();
+           out = out + affine();
         }
 
         else if (p==7)
         {
-            vigenere();
+            out = out + vigenere();
         }
 
         else if (p==8)
         {
-            RSAKeyGeneration();
+            out = out + RSAKeyGeneration();
         }
 
         else if (p==9)
         {
-            present();
+            out = out + present();
         }
+
+        output.setText(out);
     }
 
-    private void nGraph() {
-        size = Integer.parseInt(n.getText().toString());
+    public String nGraph() {
+        size = Integer.parseInt(strn);
 
         if(size<1){ //size is the result of text field i need to create (n)
             size=1;
@@ -199,10 +206,10 @@ public class MainActivity extends Activity {
             }
             //end for loop
         }//end if
-        output.setText(result);
+        return result;
     }
 
-    private void runTheAlphabet() {
+    public String runTheAlphabet() {
         input = input.toLowerCase();
         for (int j = 0; j <= 25; j++) {
             for (int i = 0; i < input.length(); i++) {
@@ -221,10 +228,10 @@ public class MainActivity extends Activity {
             }
             result = result + "\n";
             }
-        output.setText(result);
+        return result;
     }
 
-    private void indexOfCoincidence() {
+    public String indexOfCoincidence() {
         //create array to store count in a=0,b=1...
         int array[]=new int[26];
 
@@ -233,7 +240,7 @@ public class MainActivity extends Activity {
         input=input.toLowerCase();
         input=input.replaceAll("[^A-Za-z]+","");
         if(input.length()<=1){
-            output.setText("NA");
+            return "NA";
         }//end if
 
         else{
@@ -258,12 +265,12 @@ public class MainActivity extends Activity {
             double num=(double) numerator;
             double den=(double) denominator;
             double index = num/den;
-            output.setText("" + index);
+            return("" + index);
         }//end else
     }
 
-    private void caesar() {
-        caesarIndex = n.getText().toString();
+    public String caesar() {
+        caesarIndex = strn;
         size = getIndex(caesarIndex);
         input = input.toLowerCase();
         for (int i = 0; i < input.length(); i++) {
@@ -280,10 +287,10 @@ public class MainActivity extends Activity {
                 result = result + " ";
             }
         }
-        output.setText(result);
+        return result;
     }
 
-    private void frequency() {
+    public String frequency() {
         //remove spaces and special characters from string
         input=input.replaceAll(" ","");
         input=input.toLowerCase();
@@ -310,10 +317,10 @@ public class MainActivity extends Activity {
             }//end for
             result=result + l + " = " + array[i] + " = " + I + "\n";
         }//end for
-        output.setText(result);
+        return result;
     }
 
-    private void multiplicative() {
+    public String multiplicative() {
         int value = p2;
 
         input=input.replaceAll(" ","");
@@ -336,17 +343,17 @@ public class MainActivity extends Activity {
                 result = result + (' ');
             }
         }
-        output.setText(result);
+        return result;
     }
 
-    public void affine()
+    public String affine()
     {
-        caesarIndex = n.getText().toString();
+        caesarIndex = strn;
         size = getIndex(caesarIndex);
         input = input.toLowerCase();
         result = multiplicative2(input, p2);
         result = caesar2(result, size);
-        output.setText(result);
+        return result;
     }
 
     public String caesar2(String input, int index) {
@@ -418,11 +425,11 @@ public class MainActivity extends Activity {
         }
     }
 
-    private boolean isInteger(String str) {
+    public boolean isInteger(String str) {
         return str.matches("^-?\\d+$");
     }
 
-    public void vigenere()
+    public String vigenere()
     {
         ArrayList<Integer> index = getIndexArray();
         int arrayCounter = 0;
@@ -451,11 +458,11 @@ public class MainActivity extends Activity {
                 result = result + (' ');
             }
         }
-        output.setText(result);
+        return result;
     }
 
     public ArrayList<Integer> getIndexArray() {
-        String indexInput = n.getText().toString();
+        String indexInput = strn;
         indexInput = indexInput.toLowerCase();
         ArrayList<Integer> indexArray = new ArrayList<>();
 
@@ -468,7 +475,7 @@ public class MainActivity extends Activity {
         return indexArray;
     }
 
-    public void RSAKeyGeneration()
+    public String RSAKeyGeneration()
     {
         //define variables that are used in while loop below
         boolean prime1=false;
@@ -590,11 +597,11 @@ public class MainActivity extends Activity {
         result=result+"Encryption exponent is " + encryption+"\n";
         result=result+"Decryption exponent is " + decryption+"\n";
 
-        output.setText(result);
+        return result;
     }
 
     //function to get gcdExtended
-    public static long gcdExtended(long a,long b){
+    public long gcdExtended(long a,long b){
         long x=0;
         long y=1;
         long lastx=1;
@@ -619,32 +626,32 @@ public class MainActivity extends Activity {
         return lasty;
     }//end gcdExtended
 
-    public void present()
+    public String present()
     {
         String usk = input;
         usk = usk.replaceAll(" ", "");
-        String uP = n.getText().toString();
+        String uP = strn;
         uP = uP.replaceAll(" ", "");
 
         if(!usk.matches("[01]+"))
         {
-            output.setText("your first string is not a binary string");
+            return("your first string is not a binary string");
         }
 
         else  if(usk.length()!=20)
         {
-            output.setText("your first string is not of length 20");
+            return("your first string is not of length 20");
         }
 
         else  if(!uP.matches("[01]+"))
         {
-            output.setText("your second string is not a binary string");
+            return("your second string is not a binary string");
         }
 
 
         else  if(uP.length()!=16)
         {
-            output.setText("your second string is notof length 16");
+            return("your second string is notof length 16");
         }
 
         else {
@@ -679,7 +686,7 @@ public class MainActivity extends Activity {
             ct = XOR(ct, rk3);
             result = result + "Result: " + print(ct);
 
-            output.setText(result);
+            return result;
             //need to output ct using print function
         }
     }
@@ -804,7 +811,7 @@ public class MainActivity extends Activity {
     }
 
     //-------------------------XOR function-----------------------------------//
-    public static String XOR(String p, String k){
+    public String XOR(String p, String k){
         char[] pA = p.toCharArray();
         char[] kA = k.toCharArray();
         char[] x = new char[16];
@@ -820,7 +827,7 @@ public class MainActivity extends Activity {
         return String.valueOf(x);
     }
     //------------------S Box function encryption process--------------------//
-    public static String SBOX(String p){
+    public String SBOX(String p){
         String[] sIn = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"};
 
 
@@ -864,7 +871,7 @@ public class MainActivity extends Activity {
         return sF;
     }
     //--------------------------Permutation function-----------------------//
-    public static String PRM(String p){
+    public String PRM(String p){
         char[] sArray = p.toCharArray();
 
 
