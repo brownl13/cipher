@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -11,7 +11,7 @@
 
     <ScrollView
         android:layout_width="350dp"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:layout_above="@+id/spinner"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -30,7 +30,10 @@
     <ScrollView
         android:layout_width="350dp"
         android:layout_height="75dp"
-        android:id="@+id/scrollView">
+        android:id="@+id/scrollView"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/label1"
+        android:layout_toEndOf="@+id/label1">
 
         <EditText
             android:layout_width="match_parent"
@@ -66,19 +69,80 @@
         android:ems="10"
         android:id="@+id/nValue"
         android:layout_below="@+id/scrollView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/spinner"
-        android:layout_alignEnd="@+id/spinner" />
+        android:layout_alignLeft="@+id/scrollView"
+        android:layout_alignStart="@+id/scrollView" />
 
     <Spinner
+        android:layout_width="100px"
+        android:layout_height="20px"
+        android:id="@+id/oddNumbers"
+        android:layout_alignBottom="@+id/label4"
+        android:layout_toRightOf="@+id/input3"
+        android:layout_toEndOf="@+id/input3" />
+
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/oddNumbers"
+        android:id="@+id/input3"
+        android:layout_alignBottom="@+id/label3"
+        android:layout_alignLeft="@+id/nValue"
+        android:layout_alignStart="@+id/nValue" />
+
+    <TextView
+        android:layout_width="250px"
+        android:layout_height="40px"
+        android:text="Input"
+        android:id="@+id/label1"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="250px"
+        android:layout_height="40px"
+        android:text="n"
+        android:id="@+id/label2"
         android:layout_alignBottom="@+id/nValue"
-        android:layout_toRightOf="@+id/nValue"
-        android:layout_toEndOf="@+id/nValue"
-        android:layout_marginLeft="21dp"
-        android:layout_marginStart="21dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="250px"
+        android:layout_height="40px"
+        android:text="letter"
+        android:id="@+id/label3"
+        android:layout_below="@+id/label2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="multiplicative shift"
+        android:id="@+id/label4"
+        android:layout_below="@+id/label3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/label1"
+        android:layout_toLeftOf="@+id/run"
+        android:layout_toStartOf="@+id/run" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="23dp" />
 
 </RelativeLayout>

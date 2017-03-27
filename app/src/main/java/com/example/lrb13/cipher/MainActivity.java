@@ -31,9 +31,17 @@ public class MainActivity extends Activity {
     Spinner functionList;
     Spinner oddNumberList;
     TextView output;
+    TextView l1;
+    TextView l2;
+    TextView l3;
+    TextView l4;
+    TextView t1;
+    TextView t2;
+
     String nv;
     EditText in;
     EditText n;
+    EditText in3;
     int size;
     String caesarIndex;
     int p2;
@@ -57,9 +65,16 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         output = (TextView) findViewById(R.id.textView);
+        l1 = (TextView) findViewById(R.id.label1);
+        l2 = (TextView) findViewById(R.id.label2);
+        l3 = (TextView) findViewById(R.id.label3);
+        l4 = (TextView) findViewById(R.id.label4);
+        t1 = (TextView) findViewById(R.id.textView2);
+        t2 = (TextView) findViewById(R.id.textView3);
+
         n = (EditText) findViewById(R.id.nValue);
         in = (EditText) findViewById(R.id.inputCipher);
-
+        in3 = (EditText) findViewById(R.id.input3);
         functionList = (Spinner) findViewById(R.id.spinner);
         oddNumberList = (Spinner) findViewById(R.id.oddNumbers);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.split_array, android.R.layout.simple_spinner_item);
@@ -73,6 +88,8 @@ public class MainActivity extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 p = position;
+                output.setText("");
+                setLabels();
             }
 
             @Override
@@ -105,6 +122,162 @@ public class MainActivity extends Activity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    public void setLabels()
+    {
+        l1.setText("input");
+        t1.setVisibility(View.INVISIBLE);
+        t2.setVisibility(View.INVISIBLE);
+
+        if (p == 0) { //ngraph
+
+            l1.setVisibility(View.VISIBLE);
+            l2.setVisibility(View.VISIBLE);
+            l2.setText("n");
+            l3.setVisibility(View.INVISIBLE);
+            l4.setVisibility(View.INVISIBLE);
+            in.setVisibility(View.VISIBLE);
+            n.setVisibility(View.VISIBLE);
+            in3.setVisibility(View.INVISIBLE);
+            oddNumberList.setVisibility(View.INVISIBLE);
+
+        } else if (p == 1) {//run the alphabet
+
+            l1.setVisibility(View.VISIBLE);
+            l2.setVisibility(View.INVISIBLE);
+            l3.setVisibility(View.INVISIBLE);
+            l4.setVisibility(View.INVISIBLE);
+            in.setVisibility(View.VISIBLE);
+            n.setVisibility(View.INVISIBLE);
+            in3.setVisibility(View.INVISIBLE);
+            oddNumberList.setVisibility(View.INVISIBLE);
+        }
+        else if (p==2) { //index of coincidence
+
+            l1.setVisibility(View.VISIBLE);
+            l2.setVisibility(View.INVISIBLE);
+            l3.setVisibility(View.INVISIBLE);
+            l4.setVisibility(View.INVISIBLE);
+            in.setVisibility(View.VISIBLE);
+            n.setVisibility(View.INVISIBLE);
+            in3.setVisibility(View.INVISIBLE);
+            oddNumberList.setVisibility(View.INVISIBLE);
+
+        }
+        else if (p==3)
+        { //caesar
+
+            l1.setVisibility(View.VISIBLE);
+            l2.setVisibility(View.INVISIBLE);
+            l2.setVisibility(View.VISIBLE);
+            l2.setText("shift amount");
+            l3.setVisibility(View.INVISIBLE);
+            l4.setVisibility(View.INVISIBLE);
+            in.setVisibility(View.VISIBLE);
+            n.setVisibility(View.VISIBLE);
+            in3.setVisibility(View.INVISIBLE);
+            oddNumberList.setVisibility(View.INVISIBLE);
+        }
+        else if (p==4)
+        { //frequency
+
+            l1.setVisibility(View.VISIBLE);
+            l2.setVisibility(View.INVISIBLE);
+            l3.setVisibility(View.INVISIBLE);
+            l4.setVisibility(View.INVISIBLE);
+            in.setVisibility(View.VISIBLE);
+            n.setVisibility(View.INVISIBLE);
+            in3.setVisibility(View.INVISIBLE);
+            oddNumberList.setVisibility(View.INVISIBLE);
+
+
+        }
+        else if (p==5)
+        { //multiplicative
+
+            l1.setVisibility(View.VISIBLE);
+            l2.setVisibility(View.INVISIBLE);
+            l3.setVisibility(View.INVISIBLE);
+            l4.setVisibility(View.VISIBLE);
+            in.setVisibility(View.VISIBLE);
+            n.setVisibility(View.INVISIBLE);
+            in3.setVisibility(View.INVISIBLE);
+            oddNumberList.setVisibility(View.VISIBLE);
+        }
+
+        else if (p==6)
+        {
+
+            l1.setVisibility(View.VISIBLE);
+            l2.setVisibility(View.INVISIBLE);
+            l2.setVisibility(View.VISIBLE);
+            l2.setText("additive shift");
+            l3.setVisibility(View.INVISIBLE);
+            l4.setVisibility(View.VISIBLE);
+            in.setVisibility(View.VISIBLE);
+            n.setVisibility(View.VISIBLE);
+            in3.setVisibility(View.INVISIBLE);
+            oddNumberList.setVisibility(View.VISIBLE);
+        }
+
+        else if (p==7)
+        {
+
+            l1.setVisibility(View.VISIBLE);
+            l2.setVisibility(View.VISIBLE);
+            l2.setText("key word");
+            l3.setVisibility(View.INVISIBLE);
+            l4.setVisibility(View.INVISIBLE);
+            in.setVisibility(View.VISIBLE);
+            n.setVisibility(View.VISIBLE);
+            in3.setVisibility(View.INVISIBLE);
+            oddNumberList.setVisibility(View.INVISIBLE);
+        }
+
+        else if (p==8)
+        {
+
+            l1.setVisibility(View.INVISIBLE);
+            l2.setVisibility(View.INVISIBLE);
+            l3.setVisibility(View.INVISIBLE);
+            l4.setVisibility(View.INVISIBLE);
+            in.setVisibility(View.INVISIBLE);
+            n.setVisibility(View.INVISIBLE);
+            in3.setVisibility(View.INVISIBLE);
+            oddNumberList.setVisibility(View.INVISIBLE);
+        }
+
+        else if (p==9)
+        {
+            l1.setVisibility(View.INVISIBLE);
+            l1.setVisibility(View.VISIBLE);
+            l1.setText("20 bit binary string");
+            l2.setVisibility(View.INVISIBLE);
+            l2.setVisibility(View.VISIBLE);
+            l2.setText("16 bit binary string");
+            l3.setVisibility(View.INVISIBLE);
+            l4.setVisibility(View.INVISIBLE);
+            in.setVisibility(View.VISIBLE);
+            n.setVisibility(View.VISIBLE);
+            in3.setVisibility(View.INVISIBLE);
+            oddNumberList.setVisibility(View.INVISIBLE);
+        }
+
+        else if (p==10)
+        {
+
+            l1.setVisibility(View.VISIBLE);
+            l2.setVisibility(View.VISIBLE);
+            l2.setText("key word");
+            l3.setVisibility(View.VISIBLE);
+            l3.setText("letter");
+            l4.setVisibility(View.INVISIBLE);
+            in.setVisibility(View.VISIBLE);
+            n.setVisibility(View.VISIBLE);
+            in3.setVisibility(View.VISIBLE);
+            oddNumberList.setVisibility(View.INVISIBLE);
+        }
+
+    }
 
     public void RunOnClick(View v) {
         result = "";
@@ -113,7 +286,6 @@ public class MainActivity extends Activity {
         strn = strn + n.getText().toString();
         input = in.getText().toString();
         length = input.length();
-        output.setText("");
         if (p == 0) { //ngraph
 
             out = out + nGraph();
@@ -159,6 +331,9 @@ public class MainActivity extends Activity {
         {
             out = out + present();
         }
+
+        else if (p==10)
+            out = out + keywordCipher();
 
         output.setText(out);
     }
@@ -933,6 +1108,99 @@ public class MainActivity extends Activity {
 
         }
         return rString;
+    }
+
+    public String keywordCipher()
+    {
+        String keyword = n.getText().toString();
+        String letter = in3.getText().toString();
+        int letterIndex = getIndex2(letter);
+        if (letterIndex >= 0) {
+            char[] finishedAlphabet = setUpAlphabet(keyword, letterIndex);
+            String output = getOutput(input, finishedAlphabet);
+            return output;
+        }
+        else
+            return "";
+    }
+
+    public static char[] setUpAlphabet(String keyword, int letter) {
+        int letterCounter = 0;
+        char[] alphabet = new char[26];
+        boolean[] usedLetters = new boolean[26];
+        for (int i = 0; i < alphabet.length; i++) {
+            alphabet[i] = '0';
+        }
+
+        keyword = keyword.toLowerCase();
+
+        for (int i = 0; i < keyword.length(); i++) {
+            int charInt = (int)keyword.charAt(i);
+
+            if (charInt >= 97 && charInt <= 122) {
+                int indexOfLetter = charInt - 97;
+
+                if (usedLetters[indexOfLetter] == false) {
+                    alphabet[letter] = (char)keyword.charAt(i);
+                    usedLetters[indexOfLetter] = true;
+                    letter++;
+                    letterCounter++;
+                }
+            }
+        }
+
+        for (int i = 0; i < (alphabet.length - letterCounter); i++) {
+            for (int j = 0; j < usedLetters.length; j++) {
+                if (usedLetters[j] == false) {
+                    alphabet[letter % 26] = (char)(j + 97);
+                    letter++;
+                    usedLetters[j] = true;
+                    break;
+                }
+            }
+        }
+
+        return alphabet;
+    }
+
+    public String getOutput(String input, char[] alphabet) {
+        String output = "";
+        input = input.toLowerCase();
+
+        for (int i = 0; i < input.length(); i++) {
+            int charInt = (int)input.charAt(i);
+
+            if (charInt >= 97 && charInt <= 122) {
+                int indexOfLetter = charInt - 97;
+                output += alphabet[indexOfLetter];
+            }
+        }
+
+        return output;
+    }
+
+    public int getIndex2(String letterInput) {
+        if (isInteger(letterInput)) {
+            int index = Integer.parseInt(letterInput);
+            if (index < 0)
+                return -1;
+            else if (index >= 0 && index <= 25)
+                return index;
+            else
+                return (index % 26);
+        }
+        else {
+            if (letterInput.length() == 1) {
+                letterInput = letterInput.toLowerCase();
+                int charInt = (int)letterInput.charAt(0);
+                if (charInt >= 97 && charInt <= 122)
+                    return (charInt - 97);
+                else
+                    return -1;
+            }
+            else
+                return -1;
+        }
     }
 
 
