@@ -11,11 +11,12 @@
 
     <ScrollView
         android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_above="@+id/spinner"
+        android:layout_height="280dp"
+        android:id="@+id/scrollView2"
+        android:layout_above="@+id/Encipher"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/scrollView2">
+        android:layout_marginBottom="31dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -24,7 +25,8 @@
             android:scrollIndicators="right"
             android:layout_above="@+id/spinner"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:textAlignment="viewStart" />
     </ScrollView>
     
     <ScrollView
@@ -46,7 +48,7 @@
 
     <Spinner
         android:layout_width="350px"
-        android:layout_height="120px"
+        android:layout_height="80px"
         android:id="@+id/spinner"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
@@ -58,9 +60,9 @@
         android:text="Run"
         android:id="@+id/run"
         android:onClick="RunOnClick"
-        android:layout_alignTop="@+id/spinner"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignTop="@+id/Decipher"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -144,5 +146,29 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="23dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DECIPHER"
+        android:id="@+id/Decipher"
+        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp"
+        android:onClick="RunOnDecipher"
+        android:layout_alignTop="@+id/Encipher"
+        android:layout_toLeftOf="@+id/run"
+        android:layout_toStartOf="@+id/run" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ENCIPHER"
+        android:id="@+id/Encipher"
+        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp"
+        android:onClick="RunOnEncipher"
+        android:layout_alignBottom="@+id/spinner"
+        android:layout_toLeftOf="@+id/Decipher"
+        android:layout_toStartOf="@+id/Decipher" />
 
 </RelativeLayout>

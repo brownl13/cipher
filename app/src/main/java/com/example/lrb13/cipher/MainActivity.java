@@ -37,22 +37,21 @@ public class MainActivity extends Activity {
     TextView l4;
     TextView t1;
     TextView t2;
-
-    String nv;
+    Button run2;
+    Button encipher;
+    Button decipher;
     EditText in;
     EditText n;
     EditText in3;
-    int size;
+    int size = 0;
     String caesarIndex;
     int p2;
-    int position;
-    int i = 0;
-    String input;
-    String result;
-    int length;
-    int p;
-    String out;
-    String strn;
+    String input = "";
+    String result = "";
+    int length = 0;
+    int p = 0;
+    String out = "";
+    String strn = "";
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -65,13 +64,15 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         output = (TextView) findViewById(R.id.textView);
+        run2 = (Button) findViewById(R.id.run);
+        encipher = (Button) findViewById(R.id.Encipher);
+        decipher = (Button) findViewById(R.id.Decipher);
         l1 = (TextView) findViewById(R.id.label1);
         l2 = (TextView) findViewById(R.id.label2);
         l3 = (TextView) findViewById(R.id.label3);
         l4 = (TextView) findViewById(R.id.label4);
         t1 = (TextView) findViewById(R.id.textView2);
         t2 = (TextView) findViewById(R.id.textView3);
-
         n = (EditText) findViewById(R.id.nValue);
         in = (EditText) findViewById(R.id.inputCipher);
         in3 = (EditText) findViewById(R.id.input3);
@@ -139,6 +140,10 @@ public class MainActivity extends Activity {
             n.setVisibility(View.VISIBLE);
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
+            run2.setVisibility(View.VISIBLE);
+            encipher.setVisibility(View.INVISIBLE);
+            decipher.setVisibility(View.INVISIBLE);
+
 
         } else if (p == 1) {//run the alphabet
 
@@ -150,6 +155,9 @@ public class MainActivity extends Activity {
             n.setVisibility(View.INVISIBLE);
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
+            run2.setVisibility(View.VISIBLE);
+            encipher.setVisibility(View.INVISIBLE);
+            decipher.setVisibility(View.INVISIBLE);
         }
         else if (p==2) { //index of coincidence
 
@@ -161,6 +169,9 @@ public class MainActivity extends Activity {
             n.setVisibility(View.INVISIBLE);
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
+            run2.setVisibility(View.VISIBLE);
+            encipher.setVisibility(View.INVISIBLE);
+            decipher.setVisibility(View.INVISIBLE);
 
         }
         else if (p==3)
@@ -176,6 +187,9 @@ public class MainActivity extends Activity {
             n.setVisibility(View.VISIBLE);
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
+            run2.setVisibility(View.INVISIBLE);
+            encipher.setVisibility(View.VISIBLE);
+            decipher.setVisibility(View.VISIBLE);
         }
         else if (p==4)
         { //frequency
@@ -188,7 +202,9 @@ public class MainActivity extends Activity {
             n.setVisibility(View.INVISIBLE);
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
-
+            run2.setVisibility(View.VISIBLE);
+            encipher.setVisibility(View.INVISIBLE);
+            decipher.setVisibility(View.INVISIBLE);
 
         }
         else if (p==5)
@@ -202,6 +218,9 @@ public class MainActivity extends Activity {
             n.setVisibility(View.INVISIBLE);
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.VISIBLE);
+            run2.setVisibility(View.INVISIBLE);
+            encipher.setVisibility(View.VISIBLE);
+            decipher.setVisibility(View.VISIBLE);
         }
 
         else if (p==6)
@@ -217,6 +236,9 @@ public class MainActivity extends Activity {
             n.setVisibility(View.VISIBLE);
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.VISIBLE);
+            run2.setVisibility(View.INVISIBLE);
+            encipher.setVisibility(View.VISIBLE);
+            decipher.setVisibility(View.VISIBLE);
         }
 
         else if (p==7)
@@ -231,6 +253,9 @@ public class MainActivity extends Activity {
             n.setVisibility(View.VISIBLE);
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
+            run2.setVisibility(View.INVISIBLE);
+            encipher.setVisibility(View.VISIBLE);
+            decipher.setVisibility(View.VISIBLE);
         }
 
         else if (p==8)
@@ -244,6 +269,9 @@ public class MainActivity extends Activity {
             n.setVisibility(View.INVISIBLE);
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
+            run2.setVisibility(View.VISIBLE);
+            encipher.setVisibility(View.INVISIBLE);
+            decipher.setVisibility(View.INVISIBLE);
         }
 
         else if (p==9)
@@ -260,6 +288,9 @@ public class MainActivity extends Activity {
             n.setVisibility(View.VISIBLE);
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
+            run2.setVisibility(View.VISIBLE);
+            encipher.setVisibility(View.INVISIBLE);
+            decipher.setVisibility(View.INVISIBLE);
         }
 
         else if (p==10)
@@ -275,6 +306,9 @@ public class MainActivity extends Activity {
             n.setVisibility(View.VISIBLE);
             in3.setVisibility(View.VISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
+            run2.setVisibility(View.INVISIBLE);
+            encipher.setVisibility(View.VISIBLE);
+            decipher.setVisibility(View.VISIBLE);
         }
 
     }
@@ -297,30 +331,14 @@ public class MainActivity extends Activity {
             out = out + indexOfCoincidence();
 
         }
-        else if (p==3)
-        { //caesar
-            out = out + caesar();
-        }
+
         else if (p==4)
         { //frequency
             out = out + frequency();
 
 
         }
-        else if (p==5)
-        { //multiplicative
-            out = out + multiplicative();
-        }
 
-        else if (p==6)
-        {
-           out = out + affine();
-        }
-
-        else if (p==7)
-        {
-            out = out + vigenere();
-        }
 
         else if (p==8)
         {
@@ -332,13 +350,46 @@ public class MainActivity extends Activity {
             out = out + present();
         }
 
-        else if (p==10)
-            out = out + keywordCipher();
+
 
         output.setText(out);
     }
 
+    public void RunOnEncipher(View v)
+    {
+        if (p==3)
+        { //caesar
+            out = out + caesar(true);
+        }
+        else if (p==5)
+        { //multiplicative
+            out = out + multiplicative(true);
+        }
+
+        else if (p==6)
+        {
+            out = out + affine(true);
+        }
+
+        else if (p==7)
+        {
+            out = out + vigenere(true);
+        }
+        else if (p==10) {
+            out = out + keywordCipher(true);
+        }
+
+        output.setText(out);
+    }
+
+    public void RunOnDecipher(View v)
+    {
+        output.setText("Decipher button currently has no functionality");
+    }
+
     public String nGraph() {
+        if (strn == "")
+            return "n needs to be an int";
         size = Integer.parseInt(strn);
 
         if(size<1){ //size is the result of text field i need to create (n)
@@ -444,25 +495,29 @@ public class MainActivity extends Activity {
         }//end else
     }
 
-    public String caesar() {
-        caesarIndex = strn;
-        size = getIndex(caesarIndex);
-        input = input.toLowerCase();
-        for (int i = 0; i < input.length(); i++) {
-            int charInt = (int)input.charAt(i);
-            if ((charInt >= 97 && charInt <= 122)) {
-                if ((charInt + size) > 122) {
-                    int tempIndex = charInt + size - 123;
-                    result = result + ((char)(97 + tempIndex));
+    public String caesar(Boolean b) {
+        if(b == true) {
+            caesarIndex = strn;
+            size = getIndex(caesarIndex);
+            input = input.toLowerCase();
+            for (int i = 0; i < input.length(); i++) {
+                int charInt = (int) input.charAt(i);
+                if ((charInt >= 97 && charInt <= 122)) {
+                    if ((charInt + size) > 122) {
+                        int tempIndex = charInt + size - 123;
+                        result = result + ((char) (97 + tempIndex));
+                    } else
+                        result = result + ((char) (charInt + size));
+                } else {
+                    result = result + " ";
                 }
-                else
-                    result = result + ((char)(charInt + size));
             }
-            else {
-                result = result + " ";
-            }
+            return result;
         }
-        return result;
+        else
+        {
+            return "";
+        }
     }
 
     public String frequency() {
@@ -495,40 +550,51 @@ public class MainActivity extends Activity {
         return result;
     }
 
-    public String multiplicative() {
-        int value = p2;
+    public String multiplicative(Boolean b) {
+        if(b == true) {
+            int value = p2;
 
-        input=input.replaceAll(" ","");
-        input=input.toLowerCase();
-        input=input.replaceAll("[^A-Za-z]+","");
+            input = input.replaceAll(" ", "");
+            input = input.toLowerCase();
+            input = input.replaceAll("[^A-Za-z]+", "");
 
-        for (int i = 0; i < input.length(); i++) {
-            int charInt = (int)input.charAt(i);
-            if ((charInt >= 97 && charInt <= 122)) {
-                charInt = charInt - 96;
-                charInt = charInt * value;
-                charInt = charInt % 26;
-                if (charInt == 0)
-                    charInt = 122;
-                else
-                    charInt += 96;
-                result = result + ((char)charInt);
+            for (int i = 0; i < input.length(); i++) {
+                int charInt = (int) input.charAt(i);
+                if ((charInt >= 97 && charInt <= 122)) {
+                    charInt = charInt - 96;
+                    charInt = charInt * value;
+                    charInt = charInt % 26;
+                    if (charInt == 0)
+                        charInt = 122;
+                    else
+                        charInt += 96;
+                    result = result + ((char) charInt);
+                } else {
+                    result = result + (' ');
+                }
             }
-            else {
-                result = result + (' ');
-            }
+            return result;
         }
-        return result;
+        else
+        {
+            return "";
+        }
     }
 
-    public String affine()
+    public String affine(Boolean b)
     {
-        caesarIndex = strn;
-        size = getIndex(caesarIndex);
-        input = input.toLowerCase();
-        result = multiplicative2(input, p2);
-        result = caesar2(result, size);
-        return result;
+        if(b == true) {
+            caesarIndex = strn;
+            size = getIndex(caesarIndex);
+            input = input.toLowerCase();
+            result = multiplicative2(input, p2);
+            result = caesar2(result, size);
+            return result;
+        }
+        else
+        {
+            return "";
+        }
     }
 
     public String caesar2(String input, int index) {
@@ -604,36 +670,39 @@ public class MainActivity extends Activity {
         return str.matches("^-?\\d+$");
     }
 
-    public String vigenere()
+    public String vigenere(Boolean b)
     {
-        ArrayList<Integer> index = getIndexArray();
-        int arrayCounter = 0;
-        int shiftIndex = 0;
-        input = input.toLowerCase();
+        if(b == true) {
+            ArrayList<Integer> index = getIndexArray();
+            int arrayCounter = 0;
+            int shiftIndex = 0;
+            input = input.toLowerCase();
 
-        for (int i = 0; i < input.length(); i++) {
-            int charInt = (int)input.charAt(i);
-            if (charInt >= 97 && charInt <= 122) {
-                if (arrayCounter >= index.size()) {
-                    shiftIndex = index.get(arrayCounter % index.size());
-                }
-                else
-                    shiftIndex = index.get(arrayCounter);
+            for (int i = 0; i < input.length(); i++) {
+                int charInt = (int) input.charAt(i);
+                if (charInt >= 97 && charInt <= 122) {
+                    if (arrayCounter >= index.size()) {
+                        shiftIndex = index.get(arrayCounter % index.size());
+                    } else
+                        shiftIndex = index.get(arrayCounter);
 
-                if ((charInt + shiftIndex) > 122) {
-                    int tempIndex = charInt + shiftIndex - 123;
-                    result = result + ((char)(97 + tempIndex));
+                    if ((charInt + shiftIndex) > 122) {
+                        int tempIndex = charInt + shiftIndex - 123;
+                        result = result + ((char) (97 + tempIndex));
+                    } else {
+                        result = result + ((char) (charInt + shiftIndex));
+                    }
+                    arrayCounter++;
+                } else {
+                    result = result + (' ');
                 }
-                else {
-                    result = result + ((char)(charInt + shiftIndex));
-                }
-                arrayCounter++;
             }
-            else {
-                result = result + (' ');
-            }
+            return result;
         }
-        return result;
+        else
+        {
+            return "";
+        }
     }
 
     public ArrayList<Integer> getIndexArray() {
@@ -1110,18 +1179,22 @@ public class MainActivity extends Activity {
         return rString;
     }
 
-    public String keywordCipher()
+    public String keywordCipher(Boolean b)
     {
-        String keyword = n.getText().toString();
-        String letter = in3.getText().toString();
-        int letterIndex = getIndex2(letter);
-        if (letterIndex >= 0) {
-            char[] finishedAlphabet = setUpAlphabet(keyword, letterIndex);
-            String output = getOutput(input, finishedAlphabet);
-            return output;
+        if(b == true) {
+            String keyword = n.getText().toString();
+            String letter = in3.getText().toString();
+            int letterIndex = getIndex2(letter);
+            if (letterIndex >= 0) {
+                char[] finishedAlphabet = setUpAlphabet(keyword, letterIndex);
+                String output = getOutput(input, finishedAlphabet);
+                return output;
+            } else
+                return "";
         }
-        else
+        else {
             return "";
+        }
     }
 
     public static char[] setUpAlphabet(String keyword, int letter) {
