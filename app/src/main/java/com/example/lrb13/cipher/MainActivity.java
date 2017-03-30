@@ -317,6 +317,7 @@ public class MainActivity extends Activity {
         result = "";
         out = "";
         strn = "";
+        output.setText("");
         strn = strn + n.getText().toString();
         input = in.getText().toString();
         length = input.length();
@@ -357,6 +358,7 @@ public class MainActivity extends Activity {
 
     public void RunOnEncipher(View v)
     {
+        out = "";
         if (p==3)
         { //caesar
             out = out + caesar(true);
@@ -1197,7 +1199,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    public static char[] setUpAlphabet(String keyword, int letter) {
+    public char[] setUpAlphabet(String keyword, int letter) {
         int letterCounter = 0;
         char[] alphabet = new char[26];
         boolean[] usedLetters = new boolean[26];
