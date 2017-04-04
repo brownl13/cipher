@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:text="multiplicative shift"
             android:id="@+id/label4"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
            />
@@ -104,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/oddNumbers"
-            android:layout_weight="4"
+            android:layout_weight="10"
              />
     </LinearLayout>
 

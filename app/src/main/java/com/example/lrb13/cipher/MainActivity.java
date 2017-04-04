@@ -65,14 +65,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         output = (TextView) findViewById(R.id.textView);
         run2 = (Button) findViewById(R.id.run);
-        encipher = (Button) findViewById(R.id.Encipher);
         decipher = (Button) findViewById(R.id.Decipher);
         l1 = (TextView) findViewById(R.id.label1);
         l2 = (TextView) findViewById(R.id.label2);
         l3 = (TextView) findViewById(R.id.label3);
         l4 = (TextView) findViewById(R.id.label4);
-        t1 = (TextView) findViewById(R.id.textView2);
-        t2 = (TextView) findViewById(R.id.textView3);
         n = (EditText) findViewById(R.id.nValue);
         in = (EditText) findViewById(R.id.inputCipher);
         in3 = (EditText) findViewById(R.id.input3);
@@ -126,8 +123,6 @@ public class MainActivity extends Activity {
     public void setLabels()
     {
         l1.setText("input");
-        t1.setVisibility(View.INVISIBLE);
-        t2.setVisibility(View.INVISIBLE);
         run2.setText("RUN");
 
         if (p == 0) { //ngraph
@@ -142,7 +137,6 @@ public class MainActivity extends Activity {
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
             run2.setVisibility(View.VISIBLE);
-            encipher.setVisibility(View.INVISIBLE);
             decipher.setVisibility(View.INVISIBLE);
 
 
@@ -157,7 +151,6 @@ public class MainActivity extends Activity {
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
             run2.setVisibility(View.VISIBLE);
-            encipher.setVisibility(View.INVISIBLE);
             decipher.setVisibility(View.INVISIBLE);
         }
         else if (p==2) { //index of coincidence
@@ -171,7 +164,6 @@ public class MainActivity extends Activity {
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
             run2.setVisibility(View.VISIBLE);
-            encipher.setVisibility(View.INVISIBLE);
             decipher.setVisibility(View.INVISIBLE);
 
         }
@@ -190,7 +182,6 @@ public class MainActivity extends Activity {
             oddNumberList.setVisibility(View.INVISIBLE);
             run2.setVisibility(View.VISIBLE);
             run2.setText("ENCIPHER");
-            encipher.setVisibility(View.INVISIBLE);
             decipher.setVisibility(View.VISIBLE);
         }
         else if (p==4)
@@ -205,7 +196,6 @@ public class MainActivity extends Activity {
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
             run2.setVisibility(View.VISIBLE);
-            encipher.setVisibility(View.INVISIBLE);
             decipher.setVisibility(View.INVISIBLE);
 
         }
@@ -222,7 +212,6 @@ public class MainActivity extends Activity {
             oddNumberList.setVisibility(View.VISIBLE);
             run2.setVisibility(View.VISIBLE);
             run2.setText("ENCIPHER");
-            encipher.setVisibility(View.INVISIBLE);
             decipher.setVisibility(View.VISIBLE);
         }
 
@@ -241,7 +230,6 @@ public class MainActivity extends Activity {
             oddNumberList.setVisibility(View.VISIBLE);
             run2.setVisibility(View.VISIBLE);
             run2.setText("ENCIPHER");
-            encipher.setVisibility(View.INVISIBLE);
             decipher.setVisibility(View.VISIBLE);
         }
 
@@ -259,7 +247,6 @@ public class MainActivity extends Activity {
             oddNumberList.setVisibility(View.INVISIBLE);
             run2.setVisibility(View.VISIBLE);
             run2.setText("ENCIPHER");
-            encipher.setVisibility(View.INVISIBLE);
             decipher.setVisibility(View.VISIBLE);
         }
 
@@ -275,7 +262,6 @@ public class MainActivity extends Activity {
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
             run2.setVisibility(View.VISIBLE);
-            encipher.setVisibility(View.INVISIBLE);
             decipher.setVisibility(View.INVISIBLE);
         }
 
@@ -294,7 +280,6 @@ public class MainActivity extends Activity {
             in3.setVisibility(View.INVISIBLE);
             oddNumberList.setVisibility(View.INVISIBLE);
             run2.setVisibility(View.VISIBLE);
-            encipher.setVisibility(View.INVISIBLE);
             decipher.setVisibility(View.INVISIBLE);
         }
 
@@ -313,7 +298,6 @@ public class MainActivity extends Activity {
             oddNumberList.setVisibility(View.INVISIBLE);
             run2.setVisibility(View.VISIBLE);
             run2.setText("ENCIPHER");
-            encipher.setVisibility(View.INVISIBLE);
             decipher.setVisibility(View.VISIBLE);
         }
 
