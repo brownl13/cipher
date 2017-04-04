@@ -21,4 +21,10 @@
             android:value="@integer/google_play_services_version" />
     </application>
 
+    <supports-screens android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true" />
+
 </manifest>
