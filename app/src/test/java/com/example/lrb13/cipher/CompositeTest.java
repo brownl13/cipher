@@ -90,7 +90,7 @@ public class CompositeTest extends TestCase {
         ma.input = "asdf";
         ma.strn = "3";
         String expected = "dvgi";
-        assertEquals(ma.caesar(), expected);
+        assertEquals(ma.caesar(true), expected);
     }
     @Test
     public void testmultiplicative()
@@ -98,17 +98,17 @@ public class CompositeTest extends TestCase {
         ma.input = "xyz";
         ma.p2 = 1;
         String expected = "xyz";
-        assertEquals(ma.multiplicative(), expected);
+        assertEquals(ma.multiplicative(true), expected);
         ma.p2 = 3;
         expected = "twz";
-        assertEquals(ma.multiplicative(), expected);
+        assertEquals(ma.multiplicative(true), expected);
         ma.input = "Jacob is a tester!";
         ma.p2 = 19;
         expected = "hseyl owspq wpqd";
-        assertEquals(ma.multiplicative(), expected);
+        assertEquals(ma.multiplicative(true), expected);
         ma.input = "J@cob is a tester!";
         expected = "heylo wspqw pqd";
-        assertEquals(ma.multiplicative(), expected);
+        assertEquals(ma.multiplicative(true), expected);
                 /*ma.input = "";
                 ma.p2 = ;
                 expected = "";
