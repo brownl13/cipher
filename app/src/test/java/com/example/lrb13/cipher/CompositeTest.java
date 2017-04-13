@@ -144,7 +144,37 @@ public class CompositeTest extends TestCase {
                 "W = 1 = I\n" +
                 "X = 0 = \n" +
                 "Y = 0 = \n" +
+                "Z = 0 = \n" +
+                "\n\n\n"
+                + "Expected Frequencies of English\n"
+                +"\n\n"
+                + "A = 1 = I\n" +
+                "B = 0 = \n" +
+                "C = 0 = \n" +
+                "D = 0 = \n" +
+                "E = 1 = I\n" +
+                "F = 0 = \n" +
+                "G = 0 = \n" +
+                "H = 0 = \n" +
+                "I = 0 = \n" +
+                "J = 0 = \n" +
+                "K = 0 = \n" +
+                "L = 0 = \n" +
+                "M = 0 = \n" +
+                "N = 0 = \n" +
+                "O = 1 = I\n" +
+                "P = 0 = \n" +
+                "Q = 0 = \n" +
+                "R = 0 = \n" +
+                "S = 0 = \n" +
+                "T = 1 = I\n" +
+                "U = 0 = \n" +
+                "V = 0 = \n" +
+                "W = 0 = \n" +
+                "X = 0 = \n" +
+                "Y = 0 = \n" +
                 "Z = 0 = \n";
+
         assertEquals(ma.frequency(), expected);
         ma.input = "234The Wr0ng Text3#$@ Doe???";
         expected = "A = 0 = \n" +
@@ -171,6 +201,35 @@ public class CompositeTest extends TestCase {
                 "V = 0 = \n" +
                 "W = 1 = I\n" +
                 "X = 1 = I\n" +
+                "Y = 0 = \n" +
+                "Z = 0 = \n" +
+                "\n\n\n"
+                + "Expected Frequencies of English\n"
+                +"\n\n"
+                + "A = 1 = I\n" +
+                "B = 0 = \n" +
+                "C = 0 = \n" +
+                "D = 1 = I\n" +
+                "E = 2 = II\n" +
+                "F = 0 = \n" +
+                "G = 0 = \n" +
+                "H = 1 = I\n" +
+                "I = 1 = I\n" +
+                "J = 0 = \n" +
+                "K = 0 = \n" +
+                "L = 1 = I\n" +
+                "M = 0 = \n" +
+                "N = 1 = I\n" +
+                "O = 1 = I\n" +
+                "P = 0 = \n" +
+                "Q = 0 = \n" +
+                "R = 1 = I\n" +
+                "S = 1 = I\n" +
+                "T = 1 = I\n" +
+                "U = 0 = \n" +
+                "V = 0 = \n" +
+                "W = 0 = \n" +
+                "X = 0 = \n" +
                 "Y = 0 = \n" +
                 "Z = 0 = \n";
         assertEquals(ma.frequency(), expected);
