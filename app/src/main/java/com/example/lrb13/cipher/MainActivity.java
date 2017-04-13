@@ -2,28 +2,23 @@ package com.example.lrb13.cipher;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ActionMenuView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
-import android.view.View.OnClickListener;
-import android.widget.Spinner;
 import android.widget.EditText;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.math.BigInteger;
-import java.util.List;
-import java.util.Random;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 
 public class MainActivity extends Activity {
@@ -301,6 +296,23 @@ public class MainActivity extends Activity {
             decipher.setVisibility(View.VISIBLE);
         }
 
+        else if (p==11)
+        {
+
+            l1.setVisibility(View.VISIBLE);
+            l2.setVisibility(View.VISIBLE);
+            l2.setText("key word");
+            l3.setVisibility(View.INVISIBLE);
+            l4.setVisibility(View.INVISIBLE);
+            in.setVisibility(View.VISIBLE);
+            n.setVisibility(View.VISIBLE);
+            in3.setVisibility(View.INVISIBLE);
+            oddNumberList.setVisibility(View.INVISIBLE);
+            run2.setVisibility(View.VISIBLE);
+            run2.setText("ENCIPHER");
+            decipher.setVisibility(View.VISIBLE);
+        }
+
     }
 
     public void RunOnClick(View v) {
@@ -323,7 +335,7 @@ public class MainActivity extends Activity {
 
         }
 
-        if (p==3)
+        else if (p==3)
         { //caesar
             out = out + caesar(true);
         }
@@ -364,44 +376,35 @@ public class MainActivity extends Activity {
             out = out + keywordCipher(true);
         }
 
+        else if (p==11)
+        {
+            out = out + transposition(true);
+        }
+
 
         output.setText(out);
     }
 
-    public void RunOnEncipher(View v)
-    {
-        out = "";
-        if (p==3)
-        { //caesar
-            out = out + caesar(true);
-        }
-        else if (p==5)
-        { //multiplicative
-            out = out + multiplicative(true);
-        }
-
-        else if (p==6)
-        {
-            out = out + affine(true);
-        }
-
-        else if (p==7)
-        {
-            out = out + vigenere(true);
-        }
-        else if (p==10) {
-            out = out + keywordCipher(true);
-        }
-
-        output.setText(out);
-    }
 
     public void RunOnDecipher(View v)
     {
-        output.setText("Decipher button currently has no functionality");
+        result = "";
+        out = "";
+        strn = "";
+        output.setText("");
+        strn = strn + n.getText().toString();
+        input = in.getText().toString();
+        length = input.length();
+        if(p==11)
+        {
+            out = out + transposition(false);
+        }
+        output.setText(out);
+
     }
 
     public String nGraph() {
+        result = "";
         if (strn == "")
             return "n needs to be an int";
         size = Integer.parseInt(strn);
@@ -450,6 +453,7 @@ public class MainActivity extends Activity {
     }
 
     public String runTheAlphabet() {
+        result = "";
         input = input.toLowerCase();
         for (int j = 0; j <= 25; j++) {
             for (int i = 0; i < input.length(); i++) {
@@ -565,6 +569,7 @@ public class MainActivity extends Activity {
     }
 
     public String multiplicative(Boolean b) {
+        result = "";
         if(b == true) {
             int value = p2;
 
@@ -1288,6 +1293,160 @@ public class MainActivity extends Activity {
             else
                 return -1;
         }
+    }
+
+    public String transposition(boolean b)
+    {
+        //removes spaces and special characters from input and keyword
+        input=input.replaceAll(" ","");
+        input=input.toLowerCase();
+        input=input.replaceAll("[^A-Za-z]+","");
+
+        strn = strn.replaceAll(" ","");
+        strn = strn.toLowerCase();
+        strn = strn.replaceAll("[^A-Za-z]+","");
+
+        //checks to make sure input and keyword is valid
+        if(input.equals("")){
+            return("Enter text than can be enciphered or deciphered");
+
+        }//ends if
+
+        if(strn.equals("")){
+            return("Enter a keyword that can be used");
+
+        }//ends if
+
+        //if we are enciphering below runs
+        if(b==true){
+
+            //adds x to end of string if needed
+            while(input.length()%strn.length()!=0){
+                input=input+"x";
+            }//end while
+
+            //creates matrix to put string into
+            String[][] matrix = new String [input.length()/strn.length()][strn.length()];
+            int i=0;
+
+            //put text into matrix
+            for(int r=0;r<input.length()/strn.length();r++){
+                for(int c=0;c<strn.length();c++){
+                    matrix[r][c]=input.substring(i,i+1);
+                    i++;
+                }//ends c for loop
+            }//ends r for loop
+
+
+            //create array to find order to transpose matrix
+            int[] numarray=new int[strn.length()];
+            for(int j=0;j<strn.length();j++){
+                char letter=strn.charAt(j);
+                int letnum=letter-'a';
+                numarray[j]=letnum;
+            }//end for loop
+
+            //find the column to take first and add to result
+            String result="";
+            int count=0;
+            for(int j=0;j<strn.length();j++){
+                int min =27;
+                int index=-1;
+                for(int k=0;k<strn.length();k++){
+                    if(numarray[k]<min){
+                        min=numarray[k];
+                        index=k;
+                    }//end if
+                }//end nested for loop
+
+                numarray[index]=27;
+
+                for(int m=0;m<input.length()/strn.length();m++){
+                    if(count==5){
+                        result=result+" ";
+                        count=0;
+                    }//end if
+
+                    result=result+matrix[m][index];
+                    count=count+1;
+                }//end for loop
+            }//end for loop
+
+
+            //print out result
+            result=result.toUpperCase();
+            return result;
+        }//end if statement
+
+
+        //runs if decipher button is hit
+        else{
+
+            //checks to make sure it makes a complete square
+            if(input.length()%strn.length()!=0){
+                return("Make sure the length of the input is divisible by the length of keyword.");
+            }//end if
+
+            //runs if we have a full matrix
+            else{
+                //creates matrix
+                String[][] matrix = new String[input.length()/strn.length()][strn.length()];
+                int i=0;
+                int[] numarray=new int[strn.length()];
+
+                //takes keyword and converts to array to get order
+                for(int j=0;j<strn.length();j++){
+                    char letter=strn.charAt(j);
+                    int letnum=letter-'a';
+                    numarray[j]=letnum;
+                }//end for loop
+
+
+                //finds the correct order of transpose
+                //and puts text into array
+                for(int k=0;k<strn.length();k++){
+                    //reset index and min
+                    int index=-1;
+                    int min=27;
+
+                    //loop through to find the next column to add
+                    for(int j=0;j<strn.length();j++){
+                        if(numarray[j]<min){
+                            min=numarray[j];
+                            index=j;
+                        }//end if
+                    }//end for
+
+                    //reset value
+                    numarray[index]=27;
+
+                    //put text in correct location in matrix
+                    for(int n=0;n<input.length()/strn.length();n++){
+                        matrix[n][index]=input.substring(i,i+1);
+                        i++;
+                    }//end for
+                }//end for
+
+                //grab the string back out of the matrix
+                String result="";
+                int count =0;
+                for(int p=0;p<input.length()/strn.length();p++){//traverse rows
+                    for(int q=0;q<strn.length();q++){//traverse columns
+                        if(count==5){
+                            result=result+ " ";
+                            count=0;
+                        }//end if
+
+                        result=result+matrix[p][q];
+                        count=count+1;
+                    }//end for loop
+                }//end for loop
+
+                //print the output
+                return result;
+            }//end else
+
+        }//end if encipher == false statement
     }
 
 
