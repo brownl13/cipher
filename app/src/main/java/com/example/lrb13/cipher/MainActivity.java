@@ -313,9 +313,28 @@ public class MainActivity extends Activity {
             decipher.setVisibility(View.VISIBLE);
         }
 
+        else if (p==12)
+        {
+
+            l1.setVisibility(View.VISIBLE);
+            l1.setText("Plain Text");
+            l2.setVisibility(View.VISIBLE);
+            l2.setText("Matrix Size");
+            l3.setVisibility(View.VISIBLE);
+            l3.setText("Key Matrix");
+            l4.setVisibility(View.INVISIBLE);
+            in.setVisibility(View.VISIBLE);
+            n.setVisibility(View.VISIBLE);
+            in3.setVisibility(View.VISIBLE);
+            oddNumberList.setVisibility(View.INVISIBLE);
+            run2.setVisibility(View.VISIBLE);
+            run2.setText("ENCIPHER");
+            decipher.setVisibility(View.VISIBLE);
+        }
+
     }
 
-    public void RunOnClick(View v) {
+    public void RunOnClick(View v) throws Exception {
         result = "";
         out = "";
         strn = "";
@@ -381,13 +400,17 @@ public class MainActivity extends Activity {
             out = out + transposition(true);
         }
 
+        else if (p==12)
+        {
+            out = out + hill(true);
+        }
+
 
         output.setText(out);
     }
 
 
-    public void RunOnDecipher(View v)
-    {
+    public void RunOnDecipher(View v) throws Exception {
         result = "";
         out = "";
         strn = "";
@@ -398,6 +421,10 @@ public class MainActivity extends Activity {
         if(p==11)
         {
             out = out + transposition(false);
+        }
+        else if (p==12)
+        {
+            out = out + hill(false);
         }
         output.setText(out);
 
@@ -1471,6 +1498,193 @@ public class MainActivity extends Activity {
             }//end else
 
         }//end if encipher == false statement
+    }
+
+    public String hill(Boolean b) throws Exception {
+        // just and example of how to run it.
+        String plainText,cipherText, m, result;
+        result = "";
+        int block;
+        int count=0;
+        plainText = input;
+        block = Integer.parseInt(strn);
+        int nums[] = new int[block * block];
+        m = in3.getText().toString();
+        Hill hill=new Hill(block);
+
+        int k[][] = new int[block][block];
+        int ik[][] = new int[block][block];
+
+        for (char ch : m.toCharArray()){
+            if(ch==' ')
+            {
+
+            }
+            else {
+                nums[count] = (int) ch;
+                count++;
+            }
+        }
+        count = 0;
+        if(b==true) {
+            for (int i = 0; i < block; i++) {
+                for (int j = 0; j < block; j++) {
+                    k[i][j] = nums[count];
+                    count++;
+                }
+            }
+
+            plainText = plainText.replaceAll(" ", "");
+            cipherText = hill.encrypt(plainText, k);
+
+            result = result + "Encrypted Text is:\n" + cipherText;
+        }
+        else {
+            for (int i = 0; i < block; i++) {
+                for (int j = 0; j < block; j++) {
+                    ik[i][j] = nums[count];
+                    count++;
+                }
+            }
+
+            String decryptedText = hill.Decrypt(plainText, ik);
+            result = result + "Decrypted Text is:\n" + decryptedText;
+        }
+        return result;
+    }
+
+    class Basic{
+        String allChar="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        int indexOfChar(char c){
+            for(int i=0;i < allChar.length();i++){
+                if(allChar.charAt(i)==c)
+                    return i;
+            }
+            return -1;
+        }
+
+        char charAtIndex(int pos){
+            return allChar.charAt(pos);
+        }
+
+    }
+
+    class Hill{
+        Basic b1=new Basic();
+        int block=2;
+        int key[][]=new int[block][block];
+
+        Hill(int block){
+            this.block=block;
+        }
+
+
+        void keyInsert(int k[][])throws Exception{
+            key = k;
+        }
+        void KeyInverseInsert(int k[][])throws Exception{
+            key = k;
+        }
+
+        String encryptBlock(String plain)throws Exception{
+            plain=plain.toUpperCase();
+            int a[][]=new int[block][1],sum=0;
+            int cipherMatrix[][]=new int[block][1];
+            String cipher="";
+
+            for(int i=0;i < block;i++){
+                a[i][0]=b1.indexOfChar(plain.charAt(i));
+            }
+
+
+            for(int i=0;i < block;i++){
+                for(int j=0;j < 1;j++){
+                    for(int k=0;k < block;k++){
+                        sum=sum+key[i][k]*a[k][j];
+                    }
+                    cipherMatrix[i][j] = sum%26;
+                    sum = 0;
+                }
+            }
+
+
+            for(int i=0;i < block;i++)
+            {
+                cipher+=b1.charAtIndex(cipherMatrix[i][0]);
+            }
+            return cipher;
+        }
+
+        String encrypt(String plainText, int key[][])throws Exception{
+            String cipherText="";
+            keyInsert(key);
+
+            plainText=plainText.toUpperCase();
+
+            int len=plainText.length();
+            // System.out.println(plainText.substring(1,2+1));
+
+            while(len%block!=0){
+                plainText+="X";
+                System.out.println(len);
+                len=plainText.length();
+            }
+
+
+            for(int i=0;i < len-1;i=i+block){
+                cipherText+=encryptBlock(plainText.substring(i,i+block));
+                cipherText+=" ";
+            }
+            return cipherText;
+        }
+
+        String decryptBlock(String cipher)throws Exception{
+            cipher=cipher.toUpperCase();
+            int a[][]=new int[block][1],sum=0;
+            int plainMatrix[][]=new int[block][1];
+            String plain="";
+
+            for(int i=0;i < block;i++){
+                a[i][0]=b1.indexOfChar(cipher.charAt(i));
+            }
+
+
+            for(int i=0;i < block;i++){
+                for(int j=0;j < 1;j++){
+                    for(int k=0;k < block;k++){
+                        sum=sum+key[i][k]*a[k][j];
+                    }
+                    while(sum < 0){
+                        sum+=26;
+                    }
+                    plainMatrix[i][j] = sum;
+                    sum = 0;
+                }
+            }
+
+
+            for(int i=0;i < block;i++){
+                plain+=b1.charAtIndex(plainMatrix[i][0]);
+            }
+            return plain;
+        }
+
+        String Decrypt(String cipherText, int key[][])throws Exception{
+            String plainText="";
+            KeyInverseInsert(key);
+            cipherText=cipherText.replaceAll(" ", "");
+
+            cipherText=cipherText.toUpperCase();
+
+            int len=cipherText.length();
+
+            for(int i=0;i < len-1;i=i+block){
+                plainText+=decryptBlock(cipherText.substring(i,i+block));
+                plainText+=" ";
+            }
+            return plainText;
+        }
+
     }
 
 
