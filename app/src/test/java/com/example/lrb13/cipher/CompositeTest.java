@@ -20,11 +20,21 @@ public class CompositeTest extends TestCase {
     public void testnGraph()
     {
         ma.input = "abc";
-        ma.p = 0;
+       // ma.p = 0;
         ma.strn = "2";
-        ma.nGraph();
+       // ma.nGraph();
         String expected = "AB = 1 at positions 0\nBC = 1 at positions 1\n";
         assertEquals(ma.nGraph(), expected);
+    }
+    @Test
+    public void testnGraph2()
+    {
+        ma.input = "abc";
+        //ma.p = 0;
+        ma.strn = "a";
+        String expected = "n needs to be an int";
+        assertEquals(ma.nGraph(), expected);
+
     }
     @Test
     public void testrunTheAlphabet()
@@ -83,29 +93,44 @@ public class CompositeTest extends TestCase {
 
     }
     @Test
-    public void testcaesar()
-    {
-        ma.input = "asdf";
+    public void testcaesar1() {
+        ma.input = "asdfgh";
         ma.strn = "3";
-        String expected = "dvgi";
+        String expected = "DVGIJ K";
         assertEquals(ma.caesar(true), expected);
+    }
+    @Test
+    public void testcaesar2(){
+        ma.input = "ofaf nx fbjxtrj";
+        ma.strn = "5";
+        String expected = "javai sawes ome";
+        assertEquals(ma.caesar(false), expected);
+
+    }
+    @Test
+    public void testcaesar3(){
+        ma.input = "ofaf nx fbjxtrj";
+        ma.strn = "";
+        String expected = "Please enter shift amount";
+        assertEquals(ma.caesar(false), expected);
+
     }
     @Test
     public void testmultiplicative()
     {
         ma.input = "xyz";
         ma.p2 = 1;
-        String expected = "xyz";
+        String expected = "XYZ";
         assertEquals(ma.multiplicative(true), expected);
         ma.p2 = 3;
-        expected = "twz";
+        expected = "TWZ";
         assertEquals(ma.multiplicative(true), expected);
         ma.input = "Jacob is a tester!";
         ma.p2 = 19;
-        expected = "hseyl owspq wpqd";
+        expected = "HSEYL OWSPQ WPQD";
         assertEquals(ma.multiplicative(true).replaceAll(" ", ""), expected.replaceAll(" ", ""));
         ma.input = "J@cob is a tester!";
-        expected = "heylo wspqw pqd";
+        expected = "HEYLO WSPQW PQD";
         assertEquals(ma.multiplicative(true).replaceAll(" ", ""), expected.replaceAll(" ", ""));
         ma.input = "";
         ma.p2 =1 ;
@@ -114,6 +139,14 @@ public class CompositeTest extends TestCase {
 
 
 
+    }
+    @Test
+    public void testDecipherMultiplicative()
+    {
+        ma.input = "cfi";
+        ma.p3 = 9;
+        String expected = "abc";
+        assertEquals(ma.multiplicative(false), expected);
     }
     @Test
     public void testfrequency()
@@ -234,13 +267,149 @@ public class CompositeTest extends TestCase {
                 "Z = 0 = \n";
         assertEquals(ma.frequency(), expected);
     }
-    //    @Test
-    //    public void testaffine()
-    //    {
-    //        ma.input = "ahhj";
-    //        String expected = "elln";
-    //        assertEquals(ma.affine(), expected);
-    //    }
+    @Test
+        public void testaffine()
+       {
+           ma.input = "ahhj";
+           ma.strn = "4";
+           ma.p2 = 3;
+           String expected = "gbbh";
+           assertEquals(ma.affine(Boolean.TRUE), expected);
+       }
+    @Test
+    public void testaffine2()
+    {
+        ma.input = "ahhj";
+        ma.strn = "";
+        ma.p2 = 3;
+        String expected = "Please enter additive shift";
+        assertEquals(ma.affine(Boolean.TRUE), expected);
+    }
+
+
+
+    @Test
+    public void testvigenere() {
+        ma.input = "Northern Kentucky University was in the NCAA tournament"; //Logan please put input your input string
+        ma.strn = "norse";
+        String expected = "acillrfe ciahluol ieazrfjaxl krk ma hyw rpor lshfesqrbk"; //give expected string from this returned from this function
+
+        assertEquals(ma.vigenere(Boolean.TRUE), expected);
+
+        ma.input = "Computer Science is in the college of informatics";
+        ma.strn = "";
+        expected = "Please enter a keyword";
+
+        assertEquals(ma.vigenere(Boolean.TRUE), expected);
+
+        ma.input = "";
+        ma.strn = "Java";
+        expected = "Please enter text to be enciphered or deciphered";
+        assertEquals(ma.vigenere(Boolean.TRUE), expected);
+
+    }
+        @Test
+        public void testvigenere2()
+        {
+            ma.input = "Java was originally developed by James Gosling";
+            ma.strn = "python";
+            String expected = "yyoh knh mkpuvcyesm qttxscctb uf xnbcl ncfaggn";
+            assertEquals(ma.vigenere(Boolean.TRUE), expected);
+        }
+        @Test
+        public void testvigenere3() {
+        ma.input = "Android Studio is the official IDE for the Android platform";
+        ma.strn = "IDE";
+        String expected = "iqhzrml vxcgmw lw bki wijqfmio mlh jwu xph evgvwlh xoebiszp";
+        assertEquals(ma.vigenere(Boolean.TRUE), expected);
+        }
+        @Test
+        public void testvigenere4() {
+        ma.input = "Android Studio is the official IDE for the Android platform";
+        ma.strn = "9";
+        String expected = "Please enter a keyword";
+        assertEquals(ma.vigenere(Boolean.TRUE), expected);
+        }
+        @Test
+        public void testvigenere5() {
+        ma.input = "Android Studio is the official IDE for the Android platform";
+        ma.strn = "@";
+        String expected = "Please enter a keyword";
+        assertEquals(ma.vigenere(Boolean.TRUE), expected);
+    }
+
+
+
+
+
+
+  /*  @Test
+    public void testRSAKeyGeneration()
+    {
+        //this function does not have input
+        String expected = ""; //give expected string you want this function to return
+
+        assertEquals(ma.RSAKeyGeneration(), expected);
+    }*/
+
+    @Test
+    public void testpresent()
+    {
+        ma.input = "1111 1111 1111 1111 1111"; //input string value
+        ma.strn = "0000 0000 0000 0000"; //value for n in string
+        String expected = "Round 1 Key: 0010 1111 1111 1110 " + "\n"
+                + "Round 2 Key: 0001 0101 1111 1101 " +"\n"
+                + "Round 3 Key: 1111 0010 1011 1100 " + "\n"
+                + "Result: 1111 1101 1111 0010 "; //give expected string you want this function return with your input
+
+        assertEquals(ma.present(), expected);
+    }
+
+    @Test
+    public void testkeywordCipherEncipher() {
+        ma.input = "java is the programming language we used"; //put value for input
+        ma.strn = "java"; //set value for n in string
+        ma.strin3 = "d"; //set value for in3 in string
+
+        String expected = "exrxdopcalnkbnxhhdibgxibqxbasaqoaj"; //value for expected
+
+        assertEquals(ma.keywordCipher(Boolean.TRUE), expected);
+
+    }
+    @Test
+    public void testKeywordCipherDecipher(){
+
+        ma.input = "gztzf qrebn pmdpz kkfld izlds zdbub sqbv"; //put value for input
+        ma.strn = "java"; //set value for n in string
+        ma.strin3 = "d"; //set value for in3 in string
+
+        String expected = ""; //value for expected
+
+        assertEquals(ma.keywordCipher(Boolean.FALSE), expected);
+
+
+    }
+
+    @Test
+    public void testtranspositionEncipher()
+    {
+        ma.input = "this is just a test"; //set input value
+        ma.strn = "joey"; //set value for n in string
+        String expected = "IJATT ISEHS TSSUT X"; //expected value returned from this function
+
+        assertEquals(ma.transposition(Boolean.TRUE), expected);
+    }
+
+    @Test
+    public void testtranspositionDecipher()
+    {
+        ma.input = "IJATT ISEHS TSSUT X"; //set input value
+        ma.strn = "joey"; //set value for n in string
+        String expected = "thisi sjust atest x"; //expected value returned from this function
+
+        assertEquals(ma.transposition(Boolean.FALSE), expected);
+    }
+
 
     @Override
     protected void tearDown() throws Exception {

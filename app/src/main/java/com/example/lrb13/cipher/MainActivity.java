@@ -30,10 +30,7 @@ public class MainActivity extends Activity {
     TextView l2;
     TextView l3;
     TextView l4;
-    TextView t1;
-    TextView t2;
     Button run2;
-    Button encipher;
     Button decipher;
     EditText in;
     EditText n;
@@ -41,8 +38,10 @@ public class MainActivity extends Activity {
     int size = 0;
     String caesarIndex;
     int p2;
+    int p3;
     String input = "";
     String result = "";
+    String strin3;
     int length = 0;
     int p = 0;
     String out = "";
@@ -98,7 +97,9 @@ public class MainActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int[] d = {1,3,5,7,9,11,15,17,19,21,23,25};
+                int[] d2 = {1, 9, 21, 15, 3, 19, 7, 23, 11, 5, 17, 25};
                 p2 = d[position];
+                p3 = d2[position];
             }
 
             @Override
@@ -114,7 +115,17 @@ public class MainActivity extends Activity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
+    public String groupChars(String input) {
+        input = input.replaceAll(" ", "");
+        String output = "";
+        for (int i = 0; i < input.length(); i++) {
+            if ((i+1) % 5 == 0 && i != 0)
+                output += input.charAt(i) + " ";
+            else
+                output += input.charAt(i);
+        }
+        return output;
+    }
     public void setLabels()
     {
         l1.setText("input");
@@ -337,7 +348,9 @@ public class MainActivity extends Activity {
     public void RunOnClick(View v) throws Exception {
         result = "";
         out = "";
+        out = out + "\n" + "\n" + "\n";
         strn = "";
+        strin3 = in3.getText().toString();
         output.setText("");
         strn = strn + n.getText().toString();
         input = in.getText().toString();
@@ -413,6 +426,7 @@ public class MainActivity extends Activity {
     public void RunOnDecipher(View v) throws Exception {
         result = "";
         out = "";
+        out = out + "\n" + "\n" + "\n";
         strn = "";
         output.setText("");
         strn = strn + n.getText().toString();
@@ -426,13 +440,22 @@ public class MainActivity extends Activity {
         {
             out = out + hill(false);
         }
+        else if (p==5)
+        {
+            out = out + multiplicative(false);
+        }
+        else if (p==3)
+        {
+            out = out + caesar(false);
+        }
         output.setText(out);
 
     }
 
     public String nGraph() {
         result = "";
-        if (strn == "")
+        strn = strn.replaceAll("[^0-9]", "");
+        if (strn == "" || strn.length()==0)
             return "n needs to be an int";
         size = Integer.parseInt(strn);
 
@@ -541,6 +564,9 @@ public class MainActivity extends Activity {
     }
 
     public String caesar(Boolean b) {
+        strn = strn.replaceAll("[^0-9]", "");
+        if(strn.length()==0)
+            return "Please enter shift amount";
         if(b == true) {
             caesarIndex = strn;
             size = getIndex(caesarIndex);
@@ -557,11 +583,29 @@ public class MainActivity extends Activity {
                     result = result + " ";
                 }
             }
-            return result;
+            result = groupChars(result);
+            return result.toUpperCase();
         }
         else
         {
-            return "";
+            caesarIndex = strn;
+            size = getIndex(caesarIndex);
+            size = 26 - size;
+            input = input.toLowerCase();
+            for (int i = 0; i < input.length(); i++) {
+                int charInt = (int) input.charAt(i);
+                if ((charInt >= 97 && charInt <= 122)) {
+                    if ((charInt + size) > 122) {
+                        int tempIndex = charInt + size - 123;
+                        result = result + ((char) (97 + tempIndex));
+                    } else
+                        result = result + ((char) (charInt + size));
+                } else {
+                    result = result + " ";
+                }
+            }
+            result = groupChars(result);
+            return result.toLowerCase();
         }
     }
 
@@ -643,16 +687,42 @@ public class MainActivity extends Activity {
                     result = result + (' ');
                 }
             }
-            return result;
+            result = groupChars(result);
+            return result.toUpperCase();
         }
         else
         {
-            return "";
+            int value = p3;
+
+            input = input.replaceAll(" ", "");
+            input = input.toLowerCase();
+            input = input.replaceAll("[^A-Za-z]+", "");
+
+            for (int i = 0; i < input.length(); i++) {
+                int charInt = (int) input.charAt(i);
+                if ((charInt >= 97 && charInt <= 122)) {
+                    charInt = charInt - 96;
+                    charInt = charInt * value;
+                    charInt = charInt % 26;
+                    if (charInt == 0)
+                        charInt = 122;
+                    else
+                        charInt += 96;
+                    result = result + ((char) charInt);
+                } else {
+                    result = result + (' ');
+                }
+            }
+            result = groupChars(result);
+            return result.toLowerCase();
         }
     }
 
     public String affine(Boolean b)
     {
+        strn = strn.replaceAll("[^0-9]", "");
+        if(strn.length()==0)
+            return "Please enter additive shift";
         if(b == true) {
             caesarIndex = strn;
             size = getIndex(caesarIndex);
@@ -742,6 +812,15 @@ public class MainActivity extends Activity {
 
     public String vigenere(Boolean b)
     {
+        strn = strn.replaceAll("[^A-Za-z]", "");
+        if(strn.length()==0)
+        {
+            return "Please enter a keyword";
+        }
+        if(input.length()==0)
+        {
+            return "Please enter text to be enciphered or deciphered";
+        }
         if(b == true) {
             ArrayList<Integer> index = getIndexArray();
             int arrayCounter = 0;
@@ -1252,8 +1331,8 @@ public class MainActivity extends Activity {
     public String keywordCipher(Boolean b)
     {
         if(b == true) {
-            String keyword = n.getText().toString();
-            String letter = in3.getText().toString();
+            String keyword = strn;
+            String letter = strin3;
             int letterIndex = getIndex2(letter);
             if (letterIndex >= 0) {
                 char[] finishedAlphabet = setUpAlphabet(keyword, letterIndex);
