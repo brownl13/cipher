@@ -324,7 +324,7 @@ public class MainActivity extends Activity {
             decipher.setVisibility(View.VISIBLE);
         }
 
-        else if (p==12)
+       /* else if (p==12)
         {
 
             l1.setVisibility(View.VISIBLE);
@@ -341,7 +341,7 @@ public class MainActivity extends Activity {
             run2.setVisibility(View.VISIBLE);
             run2.setText("ENCIPHER");
             decipher.setVisibility(View.VISIBLE);
-        }
+        }*/
 
     }
 
@@ -413,10 +413,10 @@ public class MainActivity extends Activity {
             out = out + transposition(true);
         }
 
-        else if (p==12)
+       /* else if (p==12)
         {
             out = out + hill(true);
-        }
+        }*/
 
 
         output.setText(out);
@@ -436,10 +436,10 @@ public class MainActivity extends Activity {
         {
             out = out + transposition(false);
         }
-        else if (p==12)
+        /*else if (p==12)
         {
             out = out + hill(false);
-        }
+        }*/
         else if (p==5)
         {
             out = out + multiplicative(false);
@@ -1579,7 +1579,7 @@ public class MainActivity extends Activity {
         }//end if encipher == false statement
     }
 
-    public String hill(Boolean b) throws Exception {
+    /*public String hill(Boolean b) throws Exception {
         // just and example of how to run it.
         String plainText,cipherText, m, result;
         result = "";
@@ -1764,7 +1764,7 @@ public class MainActivity extends Activity {
             return plainText;
         }
 
-    }
+    }*/
 
 
 
