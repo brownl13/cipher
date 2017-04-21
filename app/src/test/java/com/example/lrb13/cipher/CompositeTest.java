@@ -273,7 +273,7 @@ public class CompositeTest extends TestCase {
            ma.input = "ahhj";
            ma.strn = "4";
            ma.p2 = 3;
-           String expected = "gbbh";
+           String expected = "GBBH";
            assertEquals(ma.affine(Boolean.TRUE), expected);
        }
     @Test
@@ -286,13 +286,21 @@ public class CompositeTest extends TestCase {
         assertEquals(ma.affine(Boolean.TRUE), expected);
     }
 
+    @Test
+    public void testVigenereDecipher()
+    {
+        ma.input = "ypw utgd uq cbnl ng oo oy dglmrhppe"; //Logan please put input your input string
+        ma.strn = "abc";
+        String expected = "youus edtoc allme onmyc ellph one"; //give expected string from this returned from this function
 
+        assertEquals(ma.vigenere(Boolean.FALSE), expected);
+    }
 
     @Test
     public void testvigenere() {
         ma.input = "Northern Kentucky University was in the NCAA tournament"; //Logan please put input your input string
         ma.strn = "norse";
-        String expected = "acillrfe ciahluol ieazrfjaxl krk ma hyw rpor lshfesqrbk"; //give expected string from this returned from this function
+        String expected = "ACILL RFECI AHLUO LIEAZ RFJAX LKRKM AHYWR PORLS HFESQ RBK"; //give expected string from this returned from this function
 
         assertEquals(ma.vigenere(Boolean.TRUE), expected);
 
@@ -313,14 +321,14 @@ public class CompositeTest extends TestCase {
         {
             ma.input = "Java was originally developed by James Gosling";
             ma.strn = "python";
-            String expected = "yyoh knh mkpuvcyesm qttxscctb uf xnbcl ncfaggn";
+            String expected = "YYOHK NHMKP UVCYE SMQTT XSCCT BUFXN BCLNC FAGGN ";
             assertEquals(ma.vigenere(Boolean.TRUE), expected);
         }
         @Test
         public void testvigenere3() {
         ma.input = "Android Studio is the official IDE for the Android platform";
         ma.strn = "IDE";
-        String expected = "iqhzrml vxcgmw lw bki wijqfmio mlh jwu xph evgvwlh xoebiszp";
+        String expected = "IQHZR MLVXC GMWLW BKIWI JQFMI OMLHJ WUXPH EVGVW LHXOE BISZP ";
         assertEquals(ma.vigenere(Boolean.TRUE), expected);
         }
         @Test
@@ -408,6 +416,26 @@ public class CompositeTest extends TestCase {
         String expected = "thisi sjust atest x"; //expected value returned from this function
 
         assertEquals(ma.transposition(Boolean.FALSE), expected);
+    }
+
+    @Test
+    public void testAffineDecipher()
+    {
+        ma.input = "zvn nhro kv lfmm pr vs pz lrmm yavsr";
+        ma.strn = "3";
+        ma.p3 = 9;
+        String expected = "youus edtoc allme onmyc ellph one";
+        assertEquals(ma.affine(Boolean.FALSE), expected);
+    }
+
+    @Test
+    public void testAffineDecipher2()
+    {
+        ma.input = "e";
+        ma.strn = "2";
+        ma.p3 = 9;
+        String expected = "a";
+        assertEquals(ma.affine(Boolean.FALSE), expected);
     }
 
 

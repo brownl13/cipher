@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int[] d = {1,3,5,7,9,11,15,17,19,21,23,25};
-                int[] d2 = {1, 9, 21, 15, 3, 19, 7, 23, 11, 5, 17, 25};
+                int[] d2 = {1,9,21,15,3, 19,7,23,11,5,17,25};
                 p2 = d[position];
                 p3 = d2[position];
             }
@@ -448,6 +448,8 @@ public class MainActivity extends Activity {
         {
             out = out + caesar(false);
         }
+        else if (p==6)
+            out = out + affine(false);
         output.setText(out);
 
     }
@@ -729,11 +731,18 @@ public class MainActivity extends Activity {
             input = input.toLowerCase();
             result = multiplicative2(input, p2);
             result = caesar2(result, size);
-            return result;
+            result = groupChars(result);
+            return result.toUpperCase();
         }
         else
         {
-            return "";
+            caesarIndex = strn;
+            size = getIndex(caesarIndex);
+            input = input.toLowerCase();
+            result = caesar2(input, (26-size));
+            result = multiplicative2(result, p3);
+            result = groupChars(result);
+            return result.toLowerCase();
         }
     }
 
@@ -846,11 +855,37 @@ public class MainActivity extends Activity {
                     result = result + (' ');
                 }
             }
-            return result;
+            result = groupChars(result);
+            return result.toUpperCase();
         }
         else
         {
-            return "";
+            ArrayList<Integer> index = getIndexArray2();
+            int arrayCounter = 0;
+            int shiftIndex = 0;
+            input = input.toLowerCase();
+
+            for (int i = 0; i < input.length(); i++) {
+                int charInt = (int) input.charAt(i);
+                if (charInt >= 97 && charInt <= 122) {
+                    if (arrayCounter >= index.size()) {
+                        shiftIndex = index.get(arrayCounter % index.size());
+                    } else
+                        shiftIndex = index.get(arrayCounter);
+
+                    if ((charInt + shiftIndex) > 122) {
+                        int tempIndex = charInt + shiftIndex - 123;
+                        result = result + ((char) (97 + tempIndex));
+                    } else {
+                        result = result + ((char) (charInt + shiftIndex));
+                    }
+                    arrayCounter++;
+                } else {
+                    result = result + (' ');
+                }
+            }
+            result = groupChars(result);
+            return result.toLowerCase();
         }
     }
 
@@ -863,6 +898,20 @@ public class MainActivity extends Activity {
             int charInt = (int)indexInput.charAt(i);
             if (charInt >= 97 && charInt <= 122) {
                 indexArray.add(charInt - 97);
+            }
+        }
+        return indexArray;
+    }
+
+    public ArrayList<Integer> getIndexArray2() {
+        String indexInput = strn;
+        indexInput = indexInput.toLowerCase();
+        ArrayList<Integer> indexArray = new ArrayList<>();
+
+        for (int i = 0; i < indexInput.length(); i++) {
+            int charInt = (int)indexInput.charAt(i);
+            if (charInt >= 97 && charInt <= 122) {
+                indexArray.add(26 - (charInt - 97));
             }
         }
         return indexArray;
