@@ -450,6 +450,10 @@ public class MainActivity extends Activity {
         }
         else if (p==6)
             out = out + affine(false);
+        else if (p==10)
+            out = out + keywordCipher(false);
+        else if (p==7)
+            out = out + vigenere(false);
         output.setText(out);
 
     }
@@ -1386,12 +1390,22 @@ public class MainActivity extends Activity {
             if (letterIndex >= 0) {
                 char[] finishedAlphabet = setUpAlphabet(keyword, letterIndex);
                 String output = getOutput(input, finishedAlphabet);
-                return output;
+                output = groupChars(output);
+                return output.toUpperCase();
             } else
                 return "";
         }
         else {
-            return "";
+            String keyword = strn;
+            String letter = strin3;
+            int letterIndex = getIndex2(letter);
+            if (letterIndex >= 0) {
+                char[] finishedAlphabet = setUpAlphabet(keyword, letterIndex);
+                String output = keywordDecipher(input, finishedAlphabet);
+                output = groupChars(output);
+                return output.toLowerCase();
+            } else
+                return "";
         }
     }
 
@@ -1445,6 +1459,28 @@ public class MainActivity extends Activity {
                 int indexOfLetter = charInt - 97;
                 output += alphabet[indexOfLetter];
             }
+        }
+
+        return output;
+    }
+
+    public String keywordDecipher(String input, char[] alphabet) {
+        String output = "";
+
+        input = input.toLowerCase();
+
+        for (int i = 0; i < input.length(); i++) {
+            char inputChar = input.charAt(i);
+            int letterIndex = 0;
+
+            for (int j = 0; j < alphabet.length; j++) {
+                if (alphabet[j] == inputChar) {
+                    letterIndex = j;
+                    break;
+                }
+            }
+
+            output += (char)(letterIndex + 97);
         }
 
         return output;

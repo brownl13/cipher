@@ -379,19 +379,19 @@ public class CompositeTest extends TestCase {
         ma.strn = "java"; //set value for n in string
         ma.strin3 = "d"; //set value for in3 in string
 
-        String expected = "exrxdopcalnkbnxhhdibgxibqxbasaqoaj"; //value for expected
-
+        String expected = "exrxd opcal nkbnx hhdib gxibq xbasa qoaj"; //value for expected
+        expected = expected.toUpperCase();
         assertEquals(ma.keywordCipher(Boolean.TRUE), expected);
 
     }
     @Test
     public void testKeywordCipherDecipher(){
 
-        ma.input = "gztzf qrebn pmdpz kkfld izlds zdbub sqbv"; //put value for input
+        ma.input = "exrxdopcalnkbnxhhdibgxibqxbasaqoaj"; //put value for input
         ma.strn = "java"; //set value for n in string
         ma.strin3 = "d"; //set value for in3 in string
 
-        String expected = ""; //value for expected
+        String expected = "javai sthep rogra mming langu agewe used"; //value for expected
 
         assertEquals(ma.keywordCipher(Boolean.FALSE), expected);
 
